@@ -10,6 +10,7 @@ using Delivery.Domain.Model.Addresses.Repositories;
 using Delivery.Domain.Model.Clients.Repositories;
 using Delivery.Domain.Model.Orders.Repositories;
 using Delivery.Domain.Model.Products.Repositories;
+using Delivery.Generic.Security;
 
 namespace Delivery.Application
 {
@@ -50,15 +51,10 @@ namespace Delivery.Application
 
         public bool VerifyPassword(string email, string password)
         {
-            var c = clients.GetClientByEmail(email);
-            // string hash = "abc";
-            // TODO: compute hash
-            // if (c.Hash == hash) return true;
+            var client = clients.GetClientByEmail(email);
+            var hash = Encryption.ComputeAsciiStringHash(password);
 
-            if (password == "aaa")
-                return true;
-
-            return false;
+            return client.Hash == hash;
         }
     }
 }
