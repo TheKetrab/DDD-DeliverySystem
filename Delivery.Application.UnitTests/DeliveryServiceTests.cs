@@ -1,14 +1,14 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+using Delivery.ObjectMothers;
+using Delivery.Generic.Utils;
+
 namespace Delivery.Application.UnitTests
 {
     [TestClass]
-    public class UnitTest1
+    public class DeliveryServiceTests
     {
-        [TestMethod]
-        public void TestMethod1()
-        {
-        }
+
     }
 }

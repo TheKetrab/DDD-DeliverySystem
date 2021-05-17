@@ -4,7 +4,7 @@ using System.Text;
 using Delivery.Domain.Model.Products;
 using Delivery.Domain.Model.Products.Repositories;
 
-namespace Delivery.Infrastructure.Repositories
+namespace Delivery.Infrastructure.Repositories.InMemory
 {
     public class ProductIM : IProductRepository
     {
@@ -40,6 +40,11 @@ namespace Delivery.Infrastructure.Repositories
         public void Insert(Product product)
         {
             products.Add(product);
+        }
+
+        public void DeleteAll()
+        {
+            products.RemoveAll(x => true);
         }
 
     }

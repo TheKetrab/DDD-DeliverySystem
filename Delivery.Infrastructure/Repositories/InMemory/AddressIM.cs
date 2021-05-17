@@ -6,7 +6,7 @@ using System.Text;
 
 using System.Linq;
 
-namespace Delivery.Infrastructure.Repositories
+namespace Delivery.Infrastructure.Repositories.InMemory
 {
     public class AddressIM : IAddressRepository
     {
@@ -42,15 +42,13 @@ namespace Delivery.Infrastructure.Repositories
 
         public void Delete(int id)
         {
-            addresses.RemoveAt(0);
+            var address = Find(id);
+            addresses.Remove(address);
         }
 
         public Address Find(int id)
         {
-            if (id < 0 || id >= addresses.Count)
-                throw new IndexOutOfRangeException();
-
-            return addresses[id];
+            return addresses.Find(a => a.Id == id);
         }
 
         public IEnumerable<Address> FindAll()
@@ -61,6 +59,11 @@ namespace Delivery.Infrastructure.Repositories
         public void Insert(Address address)
         {
             addresses.Add(address);
+        }
+
+        public void DeleteAll()
+        {
+            addresses.RemoveAll(x => true);
         }
     }
 }

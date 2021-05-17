@@ -1,6 +1,7 @@
-﻿using System;
-
-using Delivery.Domain.Model.Addresses;
+﻿using Delivery.Domain.Model.Addresses;
+using Delivery.Infrastructure.Repositories.InMemory;
+using Delivery.Domain.Model.Addresses.Repositories;
+using static Delivery.Generic.Utils.Randoms;
 
 namespace Delivery.ObjectMothers
 {
@@ -17,20 +18,28 @@ namespace Delivery.ObjectMothers
             "Poniatowskiego", "Trzebiatowska", "Spacerowa"
         };
 
-        public static Address CreateRandomAddress()
+        public static Address CreateRandomAddress(int i = -1)
         {
-            Random rnd = new Random();
-
             return new Address
             {
-                Id = rnd.Next(1, 1000),
-                City = RandomCities[rnd.Next(0, RandomCities.Length-1)],
+                Id = (i < 0) ? RandomInt(1, 1000000) : i,
+                City = RandomCities[RandomInt(0, RandomCities.Length-1)],
                 Nation = new Nation { Id = 1, Name = "Polska" },
-                Nr = rnd.Next(1, 500).ToString(),
-                Street = RandomStreets[rnd.Next(0, RandomStreets.Length-1)],
-                ZipCode = rnd.Next(10000, 99999).ToString().Insert(2, "-")
+                Nr = RandomInt(1, 500).ToString(),
+                Street = RandomStreets[RandomInt(0, RandomStreets.Length-1)],
+                ZipCode = RandomInt(10000, 99999).ToString().Insert(2, "-")
             };
         }
 
+        public static IAddressRepository CreateRandomAddressRepository(int count = 100)
+        {
+            AddressIM addresses = new AddressIM();
+            addresses.DeleteAll();
+
+            for (int i = 1; i <= count; i++)
+                addresses.Insert(CreateRandomAddress(i));
+
+            return addresses;
+        }
     }
 }

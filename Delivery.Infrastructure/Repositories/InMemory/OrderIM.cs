@@ -8,7 +8,7 @@ using Delivery.Domain.Model.Clients.Repositories;
 using Delivery.Domain.Model.Clients;
 using System.Linq;
 
-namespace Delivery.Infrastructure.Repositories
+namespace Delivery.Infrastructure.Repositories.InMemory
 {
     public class OrderIM : IOrderRepository
     {
@@ -80,6 +80,11 @@ namespace Delivery.Infrastructure.Repositories
         public void Insert(Order order)
         {
             orders.Add(order);
+        }
+
+        public void DeleteAll()
+        {
+            orders.RemoveAll(x => true);
         }
     }
 }

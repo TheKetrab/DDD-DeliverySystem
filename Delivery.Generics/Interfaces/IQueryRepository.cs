@@ -4,9 +4,9 @@ using System.Text;
 
 namespace Delivery.Generic.Interfaces
 {
-    public interface IRepository<T> : ICommandRepository<T>, IQueryRepository<T>
+    public interface IQueryRepository<T>
     {
-
-        
+        T Find(int id);
+        IEnumerable<T> FindAll();
     }
 }

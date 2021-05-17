@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Delivery.Domain\Delivery.Domain.csproj" />
+    <ProjectReference Include="..\Delivery.Generics\Delivery.Generic.csproj" />
   </ItemGroup>
 
 </Project>

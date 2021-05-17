@@ -7,7 +7,7 @@ using Delivery.Domain.Model.Orders.Repositories;
 
 using System.Linq;
 
-namespace Delivery.Infrastructure.Repositories
+namespace Delivery.Infrastructure.Repositories.InMemory
 {
     public class OrderHistoryIM : IOrderHistoryRepository
     {
@@ -56,6 +56,11 @@ namespace Delivery.Infrastructure.Repositories
                     select item;
 
             return res;
+        }
+
+        public void DeleteAll()
+        {
+            history.RemoveAll(x => true);
         }
     }
 }

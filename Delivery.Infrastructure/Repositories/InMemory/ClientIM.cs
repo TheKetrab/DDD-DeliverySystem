@@ -4,8 +4,9 @@ using System.Text;
 using Delivery.Domain.Model.Clients;
 using Delivery.Domain.Model.Clients.Repositories;
 using Delivery.Domain.Model.Addresses.Repositories;
+using Delivery.Generic.Security;
 
-namespace Delivery.Infrastructure.Repositories
+namespace Delivery.Infrastructure.Repositories.InMemory
 {
     public class ClientIM : IClientRepository
     {
@@ -60,7 +61,8 @@ namespace Delivery.Infrastructure.Repositories
 
         public void Delete(int id)
         {
-            clients.RemoveAt(id);
+            Client client = Find(id);
+            clients.Remove(client);
         }
 
         public Client Find(int id)
@@ -83,10 +85,20 @@ namespace Delivery.Infrastructure.Repositories
             clients.Add(client);
         }
 
+        public void SetPassword(Client client, string password)
+        {
+            client.Hash = Encryption.ComputeUtf8StringHash(password);
+        }
+
         public void SetRole(Client client, Role role)
         {
             var cl = clients.Find(c => c.Id == client.Id);
             cl.Role = role;
+        }
+
+        public void DeleteAll()
+        {
+            clients.RemoveAll(x => true);
         }
     }
 }

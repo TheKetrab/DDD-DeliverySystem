@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Delivery.ObjectMothers;
+using static Delivery.Generic.Utils.Randoms;
 
 namespace Delivery.Domain.UnitTests
 {
@@ -13,5 +14,59 @@ namespace Delivery.Domain.UnitTests
     public class AddressTests
     {
 
+        [TestMethod]
+        public void CreateAddress()
+        {
+            // Arrange
+            int total = 50;
+            int newId = total + 1;
+            var addresses = AddressObjectMother.CreateRandomAddressRepository(total);
+            var address = AddressObjectMother.CreateRandomAddress(newId);
+
+            // Act
+            addresses.Insert(address);
+
+            // Assert
+            Assert.AreEqual(address, addresses.Find(newId));
+        }
+
+        [TestMethod]
+        public void UpdateAddress()
+        {
+            // Arrange
+            int total = 50;
+            int id = RandomInt(1, total);
+            var addresses = AddressObjectMother.CreateRandomAddressRepository(total);
+            var address = addresses.Find(id);
+
+            string city = "Wilno";
+            string street = "Olszowska";
+            string nr = "333";
+
+            // Act
+            address.City = city;
+            address.Street = street;
+            address.Nr = nr;
+
+            // Assert
+            Assert.AreEqual(city, addresses.Find(id).City);
+            Assert.AreEqual(street, addresses.Find(id).Street);
+            Assert.AreEqual(nr, addresses.Find(id).Nr);
+        }
+
+        [TestMethod]
+        public void DeleteClient()
+        {
+            // Arrange
+            int total = 50;
+            int id = RandomInt(1, total);
+            var addresses = AddressObjectMother.CreateRandomAddressRepository(total);
+
+            // Act
+            addresses.Delete(id);
+
+            // Assert
+            Assert.IsNull(addresses.Find(id));
+        }
     }
 }

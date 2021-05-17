@@ -49,11 +49,29 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="DeliveryServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Delivery.Application\Delivery.Application.csproj">
+      <Project>{f21ca95e-dcc7-444e-8c84-815fc7a04be8}</Project>
+      <Name>Delivery.Application</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Delivery.Domain\Delivery.Domain.csproj">
+      <Project>{74640DA1-9F43-49A4-8E9F-BD5487D6A427}</Project>
+      <Name>Delivery.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Delivery.Generics\Delivery.Generic.csproj">
+      <Project>{f1036a8d-e7df-4b40-801e-b6245c5857a2}</Project>
+      <Name>Delivery.Generic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Delivery.ObjectMothers\Delivery.ObjectMothers.csproj">
+      <Project>{94e00fab-d407-4f6d-b3c7-a78dfa0de40b}</Project>
+      <Name>Delivery.ObjectMothers</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

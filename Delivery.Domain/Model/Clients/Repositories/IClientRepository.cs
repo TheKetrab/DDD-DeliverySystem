@@ -11,5 +11,6 @@ namespace Delivery.Domain.Model.Clients.Repositories
         Client GetClientByEmail(string email);
         void SetRole(Client client, Role role);
 
+        void SetPassword(Client client, string password);
     }
 }

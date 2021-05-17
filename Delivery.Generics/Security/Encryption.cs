@@ -9,25 +9,27 @@ namespace Delivery.Generic.Security
 {
     public class Encryption
     {
-        public const int SALT_SIZE = 24; // size in bytes
-        public const int HASH_SIZE = 24; // size in bytes
-        public const int ITERATIONS = 100000; // number of pbkdf2 iterations
+
+        private static byte[] salt = { 
+            170, 79, 116, 120, 46, 137, 47, 171,
+            201, 230, 235, 56, 57, 93, 83, 31,
+            78, 196, 194, 165, 240, 71, 225, 132
+        };
+
+        private const int SALT_SIZE = 24;
+        private const int HASH_SIZE = 24;
+        private const int ITERATIONS = 1000;
+
         public static byte[] ComputeHash(string input)
         {
-            // Generate a salt
-            RNGCryptoServiceProvider provider = new RNGCryptoServiceProvider();
-            byte[] salt = new byte[SALT_SIZE];
-            provider.GetBytes(salt);
-
-            // Generate the hash
             Rfc2898DeriveBytes pbkdf2 = new Rfc2898DeriveBytes(input, salt, ITERATIONS);
             return pbkdf2.GetBytes(HASH_SIZE);
         }
 
-        public static string ComputeAsciiStringHash(string input)
+        public static string ComputeUtf8StringHash(string input)
         {
             byte[] bytes = ComputeHash(input);
-            return Encoding.ASCII.GetString(bytes);
+            return Encoding.UTF8.GetString(bytes);
         }
 
 

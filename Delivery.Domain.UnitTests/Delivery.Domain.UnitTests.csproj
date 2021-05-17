@@ -62,6 +62,10 @@
       <Project>{74640da1-9f43-49a4-8e9f-bd5487d6a427}</Project>
       <Name>Delivery.Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Delivery.Generics\Delivery.Generic.csproj">
+      <Project>{f1036a8d-e7df-4b40-801e-b6245c5857a2}</Project>
+      <Name>Delivery.Generic</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Delivery.ObjectMothers\Delivery.ObjectMothers.csproj">
       <Project>{94e00fab-d407-4f6d-b3c7-a78dfa0de40b}</Project>
       <Name>Delivery.ObjectMothers</Name>

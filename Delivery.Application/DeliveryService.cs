@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 
-using Delivery.Infrastructure.Repositories;
+using Delivery.Infrastructure.Repositories.InMemory;
 using Delivery.Domain.Model.Addresses.Repositories;
 using Delivery.Domain.Model.Clients.Repositories;
 using Delivery.Domain.Model.Orders.Repositories;
@@ -52,7 +52,7 @@ namespace Delivery.Application
         public bool VerifyPassword(string email, string password)
         {
             var client = clients.GetClientByEmail(email);
-            var hash = Encryption.ComputeAsciiStringHash(password);
+            var hash = Encryption.ComputeUtf8StringHash(password);
 
             return client.Hash == hash;
         }
