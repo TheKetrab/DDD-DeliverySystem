@@ -25,13 +25,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Presentation.ConsoleApp", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ObjectMothers", "ObjectMothers", "{23EC63FB-5CB8-4C5E-9A48-E02A41B34B18}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Delivery.ObjectMothers", "Delivery.ObjectMothers\Delivery.ObjectMothers.csproj", "{94E00FAB-D407-4F6D-B3C7-A78DFA0DE40B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Delivery.ObjectMothers", "Delivery.ObjectMothers\Delivery.ObjectMothers.csproj", "{94E00FAB-D407-4F6D-B3C7-A78DFA0DE40B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTests", "UnitTests", "{AF2B025B-F370-482B-830C-C60EB2E6BDCE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Delivery.Application.UnitTests", "Delivery.Application.UnitTests\Delivery.Application.UnitTests.csproj", "{1CBA4992-135E-4DAC-AB18-B459E04B0D71}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Delivery.Domain.UnitTests", "Delivery.Domain.UnitTests\Delivery.Domain.UnitTests.csproj", "{B5346E83-04C2-4938-BF4B-ABB76522BAE2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SqlQueries", "SqlQueries", "{D66DDFE8-8695-4CCB-9BD9-41184FCF3972}"
+	ProjectSection(SolutionItems) = preProject
+		SqlQueries\CreateTables.sql = SqlQueries\CreateTables.sql
+		SqlQueries\RandomData.sql = SqlQueries\RandomData.sql
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
