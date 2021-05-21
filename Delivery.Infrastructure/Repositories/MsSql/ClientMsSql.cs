@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Delivery.Generic.Security;
+using Delivery.Domain.Model.Addresses.Repositories;
 
 namespace Delivery.Infrastructure.Repositories.MsSql
 {
@@ -24,30 +25,43 @@ namespace Delivery.Infrastructure.Repositories.MsSql
 
         public void Delete(int id)
         {
-            MsSqlConnector.Instance.Connection.Query(
+            MsSqlConnector.Instance.Connection.Execute(
                 "DELETE * FROM Clients WHERE Id = @id", new { id });
         }
 
         public void DeleteAll()
         {
-            MsSqlConnector.Instance.Connection.Query("DELETE * FROM Clients");
+            MsSqlConnector.Instance.Connection.Execute("DELETE * FROM Clients");
         }
 
         public Client Find(int id)
         {
-            var res = MsSqlConnector.Instance.Connection.Query<Client>(
-                "SELECT * FROM Clients WHERE Id = @id", new { id }).AsList();
+            Client c = MsSqlConnector.Instance.Connection.QuerySingle<Client>(
+                "SELECT * FROM Clients WHERE Id = @id", new { id });
 
-            if (res.Count == 0)
+            if (c == null)
                 throw new Exception();
 
-            return res[0];
+            // FOREIGN KEYS MAPPING
+            var fk = MsSqlConnector.Instance.Connection.QuerySingle<Tuple<int,int>>(
+                "SELECT Role AS Item1, AddressId AS Item2 FROM Clients WHERE Id = @id", new { id });
+
+            c.Role = (Role)(fk.Item1);
+
+            IAddressRepository addresses = new AddressMsSql();
+            c.Address = addresses.Find(fk.Item2);
+
+            return c;
         }
 
         public IEnumerable<Client> FindAll()
         {
-            var res = MsSqlConnector.Instance.Connection
+            var clients = MsSqlConnector.Instance.Connection
                 .Query<Client>("SELECT * FROM Clients");
+
+            var res = new List<Client>();
+            foreach (var c in clients)
+                res.Add(Find(c.Id));
 
             return res;
         }
@@ -60,7 +74,7 @@ namespace Delivery.Infrastructure.Repositories.MsSql
             if (res.Count == 0)
                 throw new Exception();
 
-            return res[0];
+            return Find(res[0].Id);
 
         }
 
@@ -69,32 +83,15 @@ namespace Delivery.Infrastructure.Repositories.MsSql
             MsSqlConnector.Instance.Connection.Execute(
                 "INSERT INTO Clients(Name,Email,Hash,Role,AddressId,Phone) " +
                 "VALUES (@name, @email, @hash, @role, @address, @phone)",
-                new { client.Name, client.Email, client.Hash,
-                    client.Role, client.Address, client.Phone });
+                new { 
+                    name = client.Name,
+                    email = client.Email,
+                    hash = client.Hash,
+                    role = (int)(client.Role),
+                    address = client.Address.Id,
+                    phone = client.Phone 
+                });
         }
 
-        public void SetPassword(Client client, string password)
-        {
-            string hash = Encryption.ComputeHexStringHash(password);
-
-            MsSqlConnector.Instance.Connection.Execute(
-                "UPDATE Clients SET Hash = @hash WHERE Id = @id",
-                new { hash, client.Id }
-            );
-
-        }
-
-        public void SetRole(Client client, Role role)
-        {
-            string roleName = role.ToString();
-
-            int roleId = MsSqlConnector.Instance.Connection.ExecuteScalar<int>(
-                "SELECT Id FROM ClientRole WHERE Name LIKE '@name'", new { name = roleName });
-
-            MsSqlConnector.Instance.Connection.Execute(
-                "UPDATE Clients SET Role = @roleid WHERE Id = @id",
-                new { roleid = roleId, id = client.Id }
-            );
-        }
     }
 }

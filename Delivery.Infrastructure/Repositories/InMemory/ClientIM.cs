@@ -31,6 +31,18 @@ namespace Delivery.Infrastructure.Repositories.InMemory
                     Address = addresses.Find(RandomInt(1, addresses.Count)),
                     Phone = RandomPhoneNumber()
                 });
+
+            // add admin - always
+            clients.Add(new Client
+            {
+                Id = clients.Count + 1,
+                Name = "Admin",
+                Email = "admin@gmail.com",
+                Role = Role.Admin,
+                Hash = Encryption.ComputeHexStringHash("abc"), // Password is: abc
+                Address = addresses.Find(RandomInt(1, addresses.Count)),
+                Phone = RandomPhoneNumber()
+            });
         }
 
         public void Delete(int id)
@@ -57,17 +69,6 @@ namespace Delivery.Infrastructure.Repositories.InMemory
         public void Insert(Client client)
         {
             clients.Add(client);
-        }
-
-        public void SetPassword(Client client, string password)
-        {
-            client.Hash = Encryption.ComputeHexStringHash(password);
-        }
-
-        public void SetRole(Client client, Role role)
-        {
-            var cl = clients.Find(c => c.Id == client.Id);
-            cl.Role = role;
         }
 
         public void DeleteAll()

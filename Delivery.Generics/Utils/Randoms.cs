@@ -55,7 +55,7 @@ namespace Delivery.Generic.Utils
 
         public static int RandomInt(int min, int max)
         {
-            return rnd.Next(min, max);
+            return rnd.Next(min, max+1);
         }
 
         public static double RandomDouble(double min, double max)

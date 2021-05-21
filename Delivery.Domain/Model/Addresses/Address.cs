@@ -13,5 +13,13 @@ namespace Delivery.Domain.Model.Addresses
         public string Nr { get; set; }
         public string ZipCode { get; set; }
 
+        public override string ToString()
+        {
+            return
+                string.Format("{0}, {1}, {2}, {3}",
+                    ZipCode, City, Street, Nr
+                );
+
+        }
     }
 }

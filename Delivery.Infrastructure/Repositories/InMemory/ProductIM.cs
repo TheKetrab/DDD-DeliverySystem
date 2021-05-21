@@ -12,6 +12,8 @@ namespace Delivery.Infrastructure.Repositories.InMemory
     {
         List<Product> products;
 
+        public int Count => products.Count;
+
         public ProductIM(int cnt = 0)
         {
             products = new List<Product>();

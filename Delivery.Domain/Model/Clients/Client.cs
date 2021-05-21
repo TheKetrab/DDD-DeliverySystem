@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
+
 using Delivery.Domain.Model.Addresses;
+using Delivery.Generic.Security;
 
 namespace Delivery.Domain.Model.Clients
 {
@@ -15,6 +17,11 @@ namespace Delivery.Domain.Model.Clients
         public Role Role { get; set; }
         public Address Address { get; set; }
         public string Phone { get; set; }
+
+        public void SetPassword(string password)
+        {
+            Hash = Encryption.ComputeHexStringHash(password);
+        }
 
     }
 }

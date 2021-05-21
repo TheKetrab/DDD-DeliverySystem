@@ -5,11 +5,15 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Dapper;
+using Delivery.Domain.Model.Clients.Repositories;
+using Delivery.Domain.Model.Addresses.Repositories;
 
 namespace Delivery.Infrastructure.Repositories.MsSql
 {
     public class OrderMsSql : IOrderRepository
     {
+        public int Count => throw new NotImplementedException();
+
         public void Delete(int id)
         {
             MsSqlConnector.Instance.Connection.Query(
@@ -23,14 +27,23 @@ namespace Delivery.Infrastructure.Repositories.MsSql
 
         public Order Find(int id)
         {
-            var res = MsSqlConnector.Instance.Connection.Query<Order>(
-                "SELECT * FROM Orders WHERE Id = @id", new { id }).AsList();
+            Order o = MsSqlConnector.Instance.Connection.QuerySingle<Order>(
+                "SELECT * FROM Orders WHERE Id = @id", new { id });
 
-            if (res.Count == 0)
+            if (o == null)
                 throw new Exception();
 
-            return res[0];
+            // FOREIGN KEYS MAPPING
+            var p = MsSqlConnector.Instance.Connection.QuerySingle<Tuple<int,int>>(
+                "SELECT DeliveryAddressId as Item1, OwnerId as Item2 FROM Orders WHERE Id = @id", new { id });
 
+            IClientRepository cRepo = new ClientMsSql();
+            IAddressRepository aRepo = new AddressMsSql();
+
+            o.DeliveryAddress = aRepo.Find(p.Item1);
+            o.Owner = cRepo.Find(p.Item2);
+
+            return o;
         }
 
         public IEnumerable<Order> FindAll()
@@ -41,10 +54,16 @@ namespace Delivery.Infrastructure.Repositories.MsSql
             return res;
         }
 
-        public IEnumerable<Order> GetClientOrders(Client c)
+        public IEnumerable<Order> GetOrdersByClient(Client c)
         {
-            var res = MsSqlConnector.Instance.Connection.Query<Order>(
+            var orders = MsSqlConnector.Instance.Connection.Query<Order>(
                 "SELECT * FROM Orders WHERE OwnerId = @id", new { id = c.Id });
+
+            IOrderRepository orderRepository = new OrderMsSql();
+
+            var res = new List<Order>();
+            foreach (var o in orders)
+                res.Add(orderRepository.Find(o.Id));
 
             return res;
         }

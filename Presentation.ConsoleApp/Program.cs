@@ -13,10 +13,10 @@ namespace Presentation.ConsoleApp
 
             Console.WriteLine(" ----- DELIVERY SYSTEM ----- ");
             Console.WriteLine(" > Login first, put your email and password");
-            Console.Write(" > Email (mail1@gmail.com): ");
-            string email = Console.ReadLine();
+            Console.Write(" > Email (admin@gmail.com): ");
+            string email = "mail2@gmail.com";//Console.ReadLine();
             Console.Write(" > Password (abc): ");
-            string password = Console.ReadLine();
+            string password = "abc";// Console.ReadLine();
 
             if (!service.VerifyPassword(email, password))
             {
@@ -26,8 +26,8 @@ namespace Presentation.ConsoleApp
 
             Console.WriteLine(" > Your orders:");
             foreach (var o in service.GetOwnOrders(email))
-                Console.WriteLine("\t Latest date: {0}\t Status: {1}",
-                    o.LatestDeliveryDate, o.Status);
+                Console.WriteLine("\tAddress: {0}\tLatest date: {1}",
+                    o.DeliveryAddress.ToString(), o.LatestDeliveryDate);
 
             Console.ReadLine();            
         }

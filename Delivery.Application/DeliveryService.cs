@@ -26,10 +26,10 @@ namespace Delivery.Application
 
         public DeliveryService()
         {
-            //addresses = new AddressIM();
-            //clients = new ClientIM(addresses);
-            //orders = new OrderIM(addresses, clients);
-            //products = new ProductIM();
+            //addresses = new AddressIM(10);
+            //clients = new ClientIM(addresses,10);
+            //orders = new OrderIM(addresses, clients, 1000);
+            //products = new ProductIM(100);
             //history = new OrderHistoryIM();
 
             addresses = new AddressMsSql();
@@ -53,7 +53,7 @@ namespace Delivery.Application
         public IEnumerable<Order> GetOwnOrders(string email)
         {
             var client = clients.GetClientByEmail(email);
-            return orders.GetClientOrders(client);
+            return orders.GetOrdersByClient(client);
         }
 
         public bool VerifyPassword(string email, string password)

@@ -8,6 +8,5 @@ namespace Delivery.Domain.Model.Addresses.Repositories
 {
     public interface IAddressRepository : IRepository<Address>
     {
-        int Count { get; }
     }
 }

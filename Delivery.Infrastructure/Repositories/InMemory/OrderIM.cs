@@ -15,6 +15,8 @@ namespace Delivery.Infrastructure.Repositories.InMemory
     {
         List<Order> orders;
 
+        public int Count => orders.Count;
+
         public OrderIM(IAddressRepository addresses, IClientRepository clients, int ordersCnt = 0)
         {
             orders = new List<Order>();
@@ -44,7 +46,7 @@ namespace Delivery.Infrastructure.Repositories.InMemory
             return new List<Order>(orders);
         }
 
-        public IEnumerable<Order> GetClientOrders(Client c)
+        public IEnumerable<Order> GetOrdersByClient(Client c)
         {
             var res = from o in orders
                       where o.Owner == c

@@ -9,6 +9,8 @@ namespace Delivery.Infrastructure.Repositories.MsSql
 {
     public class ProductMsSql : IProductRepository
     {
+        public int Count => throw new NotImplementedException();
+
         public void Delete(int id)
         {
             MsSqlConnector.Instance.Connection.Query(

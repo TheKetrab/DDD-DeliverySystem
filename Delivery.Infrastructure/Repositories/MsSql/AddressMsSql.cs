@@ -23,24 +23,33 @@ namespace Delivery.Infrastructure.Repositories.MsSql
 
         public void Delete(int id)
         {
-            MsSqlConnector.Instance.Connection.Query(
+            MsSqlConnector.Instance.Connection.Execute(
                 "DELETE * FROM Addresses WHERE Id = @id", new { id });
         }
 
         public void DeleteAll()
         {
-            MsSqlConnector.Instance.Connection.Query("DELETE * FROM Addresses");
+            MsSqlConnector.Instance.Connection.Execute("DELETE * FROM Addresses");
         }
 
         public Address Find(int id)
         {
-            var res = MsSqlConnector.Instance.Connection.Query<Address>(
-                "SELECT * FROM Addresses WHERE Id = @id", new { id }).AsList();
+            Address a = MsSqlConnector.Instance.Connection.QuerySingle<Address>(
+                "SELECT * FROM Addresses WHERE Id = @id", new { id });
 
-            if (res.Count == 0)
+            if (a == null)
                 throw new Exception();
 
-            return res[0];
+            // FOREIGN KEYS MAPPING
+            int nationId = MsSqlConnector.Instance.Connection.ExecuteScalar<int>(
+                "SELECT NationId FROM Addresses WHERE Id = @id", new { id });
+
+            Nation nation = MsSqlConnector.Instance.Connection.QuerySingle<Nation>(
+                "SELECT * FROM Nations WHERE Id = @nationId", new { nationId });
+
+            a.Nation = nation;
+
+            return a;
         }
 
 
@@ -57,7 +66,13 @@ namespace Delivery.Infrastructure.Repositories.MsSql
             MsSqlConnector.Instance.Connection.Execute(
                 "INSERT INTO Addresses(NationId,City,Street,Nr,ZipCode) " +
                 "VALUES (@nation, @city, @street, @nr, @zipcode)",
-                new { nation = item.Nation.Id, item.City, item.Street, item.Nr, item.ZipCode });
+                new { 
+                    nation = item.Nation.Id,
+                    city = item.City,
+                    street = item.Street,
+                    nr = item.Nr,
+                    zipcode = item.ZipCode 
+                });
         }
     }
 }

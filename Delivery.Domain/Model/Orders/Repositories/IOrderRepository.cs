@@ -9,6 +9,6 @@ namespace Delivery.Domain.Model.Orders.Repositories
 {
     public interface IOrderRepository : IRepository<Order>
     {
-        IEnumerable<Order> GetClientOrders(Client c);
+        IEnumerable<Order> GetOrdersByClient(Client c);
     }
 }
