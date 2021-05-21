@@ -8,16 +8,14 @@ namespace Delivery.ObjectMothers
 {
     public class OrderObjectMother
     {
-        public static Order CreateEmptyOrder()
+        public static Order CreateEmptyOrder(int id = -1)
         {
-            Random rnd = new Random();
-
             return new Order
             {
-                Id = rnd.Next(1, 10000),
-                DeliveryAddress = AddressObjectMother.CreateRandomAddress(),
-                LatestDeliveryDate = DateTime.Now.AddDays(rnd.Next(-1000, 1000)),
-                Owner = ClientObjectMother.CreateRandomUser(),
+                Id = (id < 0) ? 1 : id,
+                DeliveryAddress = AddressObjectMother.CreateAddress(),
+                LatestDeliveryDate = DateTime.Now.AddDays(5),
+                Owner = ClientObjectMother.CreateUser(),
                 Status = Status.Inactive
             };
         }

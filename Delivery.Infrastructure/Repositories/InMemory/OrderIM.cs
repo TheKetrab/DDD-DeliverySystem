@@ -7,6 +7,7 @@ using Delivery.Domain.Model.Addresses.Repositories;
 using Delivery.Domain.Model.Clients.Repositories;
 using Delivery.Domain.Model.Clients;
 using System.Linq;
+using static Delivery.Generic.Utils.Randoms;
 
 namespace Delivery.Infrastructure.Repositories.InMemory
 {
@@ -14,43 +15,18 @@ namespace Delivery.Infrastructure.Repositories.InMemory
     {
         List<Order> orders;
 
-        public OrderIM(IAddressRepository addresses, IClientRepository clients)
+        public OrderIM(IAddressRepository addresses, IClientRepository clients, int ordersCnt = 0)
         {
-            orders = new List<Order>()
-            {
-                new Order()
+            orders = new List<Order>();
+            for (int i = 1; i <= ordersCnt; i++)
+                orders.Add(new Order
                 {
-                    Id = 1,
-                    DeliveryAddress = addresses.Find(2),
-                    LatestDeliveryDate = new DateTime(2021,7,3),
-                    Owner = clients.Find(3),
-                    Status = Status.Paid
-                },
-                new Order()
-                {
-                    Id = 2,
-                    DeliveryAddress = addresses.Find(1),
-                    LatestDeliveryDate = new DateTime(2022,1,15),
-                    Owner = clients.Find(1),
-                    Status = Status.Paid
-                },
-                new Order()
-                {
-                    Id = 3,
-                    DeliveryAddress = addresses.Find(6),
-                    LatestDeliveryDate = new DateTime(2021,7,26),
-                    Owner = clients.Find(2),
-                    Status = Status.Canceled
-                },
-                new Order()
-                {
-                    Id = 4,
-                    DeliveryAddress = addresses.Find(7),
-                    LatestDeliveryDate = new DateTime(2023,10,30),
-                    Owner = clients.Find(1),
-                    Status = Status.Inactive
-                }
-            };
+                    Id = i,
+                    DeliveryAddress = addresses.Find(RandomInt(1,addresses.Count)),
+                    LatestDeliveryDate = DateTime.Now.AddDays(RandomInt(-100,100)),
+                    Owner = clients.Find(RandomInt(1,clients.Count)),
+                    Status = (Status)(RandomInt(0,5))
+                });
         }
 
         public void Delete(int id)

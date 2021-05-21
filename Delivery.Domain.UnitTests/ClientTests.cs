@@ -15,7 +15,7 @@ namespace Delivery.Domain.UnitTests
         public void ChangeClientPassword()
         {
             // Arrange
-            var clients = ClientObjectMother.CreateRandomClientsRepository(50);
+            var clients = ClientObjectMother.CreateClientsRepository(50);
             string newPassword = RandomString(15);
             int id = 13;
 
@@ -25,7 +25,7 @@ namespace Delivery.Domain.UnitTests
 
             // Assert
             Assert.AreEqual(
-                Encryption.ComputeUtf8StringHash(newPassword),
+                Encryption.ComputeHexStringHash(newPassword),
                 clients.Find(id).Hash
             );
         }
@@ -36,8 +36,8 @@ namespace Delivery.Domain.UnitTests
             // Arrange
             int total = 50;
             int newId = total + 1;
-            var clients = ClientObjectMother.CreateRandomClientsRepository(total);
-            var client = ClientObjectMother.CreateRandomUser(newId);
+            var clients = ClientObjectMother.CreateClientsRepository(total);
+            var client = ClientObjectMother.CreateUser(newId);
 
             // Act
             clients.Insert(client);
@@ -52,7 +52,7 @@ namespace Delivery.Domain.UnitTests
             // Arrange
             int total = 50;
             int id = RandomInt(1,total);
-            var clients = ClientObjectMother.CreateRandomClientsRepository(total);
+            var clients = ClientObjectMother.CreateClientsRepository(total);
             var client = clients.Find(id);
             string name = RandomString(30);
             string phone = RandomPhoneNumber();
@@ -72,7 +72,7 @@ namespace Delivery.Domain.UnitTests
             // Arrange
             int total = 50;
             int id = RandomInt(1, total);
-            var clients = ClientObjectMother.CreateRandomClientsRepository(total);
+            var clients = ClientObjectMother.CreateClientsRepository(total);
 
             // Act
             clients.Delete(id);

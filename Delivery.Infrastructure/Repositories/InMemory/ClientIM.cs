@@ -5,6 +5,9 @@ using Delivery.Domain.Model.Clients;
 using Delivery.Domain.Model.Clients.Repositories;
 using Delivery.Domain.Model.Addresses.Repositories;
 using Delivery.Generic.Security;
+using Delivery.Generic.Security;
+
+using static Delivery.Generic.Utils.Randoms;
 
 namespace Delivery.Infrastructure.Repositories.InMemory
 {
@@ -12,51 +15,22 @@ namespace Delivery.Infrastructure.Repositories.InMemory
     {
         List<Client> clients;
 
-        public ClientIM(IAddressRepository addresses)
+        public int Count => clients.Count;
+
+        public ClientIM(IAddressRepository addresses, int clientsCnt = 0)
         {
-            clients = new List<Client>()
-            {
-                new Client()
+            clients = new List<Client>();
+            for (int i = 1; i <= clientsCnt; i++)
+                clients.Add(new Client
                 {
-                    Id = 1,
-                    Name = "Admin",
-                    Email = "theadmin@xyz.pl",
-                    Role = Role.Admin,
-                    Hash = "4b8bce88d4963bee06eb985fed7c3266",
-                    Address = addresses.Find(1),
-                    Phone = "+1-202-555-0195"
-                },
-                new Client()
-                {
-                    Id = 2,
-                    Name = "Rowerowo PL",
-                    Email = "simpleMail1@gmail.com",
-                    Role = Role.Moderator,
-                    Hash = "eceb68139feb48ee5bedd74c8ca32c76",
-                    Address = addresses.Find(2),
-                    Phone = "+1-202-555-0184"
-                },
-                new Client()
-                {
-                    Id = 3,
-                    Name = "Axy Alpha",
-                    Email = "laptopbest@aa.nl",
+                    Id = i,
+                    Name = "Client" + i,
+                    Email = RandomString(10) + "@gmail.com",
                     Role = Role.User,
-                    Hash = "00847eb043aba329f6ff05972ede0263",
-                    Address = addresses.Find(6),
-                    Phone = "+48 579 564 398"
-                },
-                new Client()
-                {
-                    Id = 4,
-                    Name = "Sir Patrick Company",
-                    Email = "dellit@on.it",
-                    Role = Role.PremiumUser,
-                    Hash = "75d5ad4389fb134374103d8cc03a8ba8",
-                    Address = addresses.Find(7),
-                    Phone = "+48 727 842 501"
-                }
-            };
+                    Hash = Encryption.ComputeHexStringHash("abc"), // Password is: abc
+                    Address = addresses.Find(RandomInt(1, addresses.Count)),
+                    Phone = RandomPhoneNumber()
+                });
         }
 
         public void Delete(int id)
@@ -87,7 +61,7 @@ namespace Delivery.Infrastructure.Repositories.InMemory
 
         public void SetPassword(Client client, string password)
         {
-            client.Hash = Encryption.ComputeUtf8StringHash(password);
+            client.Hash = Encryption.ComputeHexStringHash(password);
         }
 
         public void SetRole(Client client, Role role)

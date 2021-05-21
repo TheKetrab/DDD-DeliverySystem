@@ -8,23 +8,15 @@ namespace Delivery.ObjectMothers
 {
     public class ProductObjectMother
     {
-        private static Random rnd = new Random();
-
-        private static string[] ProductNames = {
-            "Gitara", "Samochód", "Komputer", "Kartka", "Szklanka",
-            "Telefon", "Długopis", "Myszka", "Szafka", "Lampka",
-            "Łóżko", "Szafa", "Stół", "Zbiór zadań", "Szyba", "Słoik"
-        };
-
-        public static Product CreateRandomProduct()
+        public static Product CreateProduct(int id = -1)
         {
             return new Product
             {
-                Id = rnd.Next(1, 1000000),
-                Name = ProductNames[rnd.Next(0, ProductNames.Length - 1)] + " " + rnd.Next(1, 100).ToString(),
-                DeliveryCost = (decimal)(rnd.NextDouble() * 1000),
-                Description = "",
-                Weight = (float)(rnd.NextDouble() * 50)
+                Id = id < 0 ? 1 : id,
+                Name = "Item 1",
+                DeliveryCost = 48.12m,
+                Description = "Simple description",
+                Weight = 3f
             };
         }
 
@@ -33,7 +25,7 @@ namespace Delivery.ObjectMothers
             List<Product> products = new List<Product>();
 
             for (int i = 0; i < count; i++)
-                products.Add(CreateRandomProduct());
+                products.Add(CreateProduct());
 
             return products;
         }

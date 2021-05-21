@@ -11,12 +11,12 @@ namespace Delivery.ObjectMothers
 {
     public class ClientObjectMother
     {
-        public static Client CreateRandomUser(int i = -1)
+        public static Client CreateUser(int i = -1)
         {
             return new Client
             {
-                Id = (i < 0) ? Randoms.RandomInt(1,1000000) : i,
-                Address = AddressObjectMother.CreateRandomAddress(),
+                Id = (i < 0) ? 1 : i,
+                Address = AddressObjectMother.CreateAddress(),
                 Email = "abc@gmail.com",
                 Hash = "",
                 Name = "",
@@ -25,21 +25,21 @@ namespace Delivery.ObjectMothers
             };
         }
 
-        public static Client CreateRandomUserWithRole(Role role)
+        public static Client CreateUserWithRole(Role role)
         {
-            Client client = CreateRandomUser();
+            Client client = CreateUser();
             client.Role = role;
             return client;
         }
 
-        public static IClientRepository CreateRandomClientsRepository(int count = 100)
+        public static IClientRepository CreateClientsRepository(int count = 100)
         {
             AddressIM addresses = new AddressIM();
             ClientIM clients = new ClientIM(addresses);
             clients.DeleteAll();
 
             for (int i = 1; i <= count; i++)
-                clients.Insert(CreateRandomUser(i));
+                clients.Insert(CreateUser(i));
 
             return clients;
         }

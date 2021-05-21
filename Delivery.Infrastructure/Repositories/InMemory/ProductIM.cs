@@ -4,22 +4,25 @@ using System.Text;
 using Delivery.Domain.Model.Products;
 using Delivery.Domain.Model.Products.Repositories;
 
+using static Delivery.Generic.Utils.Randoms;
+
 namespace Delivery.Infrastructure.Repositories.InMemory
 {
     public class ProductIM : IProductRepository
     {
         List<Product> products;
 
-        public ProductIM()
+        public ProductIM(int cnt = 0)
         {
-            products = new List<Product>()
-            {
-                new Product() { Id = 1, Name = "Laptop", DeliveryCost = 120.99m, Weight = 3 },
-                new Product() { Id = 2, Name = "Termistor", DeliveryCost = 4.12m, Weight = 0.0023f },
-                new Product() { Id = 3, Name = "Kaloryfer", DeliveryCost = 330.12m, Weight = 18 },
-                new Product() { Id = 4, Name = "Lampka nocna", DeliveryCost = 7.33m, Weight = 1.25f },
-                new Product() { Id = 5, Name = "Rower", DeliveryCost = 17.12m, Weight = 15.63f }
-            };
+            products = new List<Product>();
+            for (int i = 1; i <= cnt; i++)
+                products.Add(new Product
+                {
+                    Id = i,
+                    Name = "Product" + i,
+                    DeliveryCost = (decimal)RandomDouble(0.5, 25),
+                    Weight = (float)RandomDouble(0.05, 100)
+                });
         }
 
         public void Delete(int id)

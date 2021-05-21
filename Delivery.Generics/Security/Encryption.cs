@@ -4,6 +4,7 @@ using System.Text;
 
 using System.Security.Cryptography;
 using System.IO;
+using Delivery.Generic.Utils;
 
 namespace Delivery.Generic.Security
 {
@@ -26,10 +27,10 @@ namespace Delivery.Generic.Security
             return pbkdf2.GetBytes(HASH_SIZE);
         }
 
-        public static string ComputeUtf8StringHash(string input)
+        public static string ComputeHexStringHash(string input)
         {
             byte[] bytes = ComputeHash(input);
-            return Encoding.UTF8.GetString(bytes);
+            return Converters.ByteArrayToHexString(bytes);
         }
 
 

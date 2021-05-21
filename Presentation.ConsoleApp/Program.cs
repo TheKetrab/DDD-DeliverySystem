@@ -1,6 +1,7 @@
 ﻿using System;
 
 using Delivery.Application;
+using Delivery.Generic.Security;
 
 namespace Presentation.ConsoleApp
 {
@@ -12,9 +13,9 @@ namespace Presentation.ConsoleApp
 
             Console.WriteLine(" ----- DELIVERY SYSTEM ----- ");
             Console.WriteLine(" > Login first, put your email and password");
-            Console.Write(" > Email (theadmin@xyz.pl): ");
+            Console.Write(" > Email (mail1@gmail.com): ");
             string email = Console.ReadLine();
-            Console.Write(" > Password (aaa): ");
+            Console.Write(" > Password (abc): ");
             string password = Console.ReadLine();
 
             if (!service.VerifyPassword(email, password))
@@ -25,7 +26,8 @@ namespace Presentation.ConsoleApp
 
             Console.WriteLine(" > Your orders:");
             foreach (var o in service.GetOwnOrders(email))
-                Console.WriteLine("\t Owner: {0}\t status: {1}", o.Owner.Name, o.Status);
+                Console.WriteLine("\t Latest date: {0}\t Status: {1}",
+                    o.LatestDeliveryDate, o.Status);
 
             Console.ReadLine();            
         }

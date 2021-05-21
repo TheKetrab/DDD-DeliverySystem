@@ -10,6 +10,18 @@ namespace Delivery.Infrastructure.Repositories.MsSql
 {
     public class ClientMsSql : IClientRepository
     {
+        public int Count
+        {
+            get
+            {
+                int cnt = MsSqlConnector.Instance.Connection.ExecuteScalar<int>(
+                    "SELECT COUNT(*) FROM Clients");
+
+                return cnt;
+            }
+        }
+
+
         public void Delete(int id)
         {
             MsSqlConnector.Instance.Connection.Query(
@@ -43,7 +55,7 @@ namespace Delivery.Infrastructure.Repositories.MsSql
         public Client GetClientByEmail(string email)
         {
             var res = MsSqlConnector.Instance.Connection.Query<Client>(
-                "SELECT * FROM Clients WHERE Email LIKE '@email'", new { email }).AsList();
+                "SELECT * FROM Clients WHERE Email LIKE @email", new { email }).AsList();
 
             if (res.Count == 0)
                 throw new Exception();
@@ -63,7 +75,7 @@ namespace Delivery.Infrastructure.Repositories.MsSql
 
         public void SetPassword(Client client, string password)
         {
-            string hash = Encryption.ComputeUtf8StringHash(password);
+            string hash = Encryption.ComputeHexStringHash(password);
 
             MsSqlConnector.Instance.Connection.Execute(
                 "UPDATE Clients SET Hash = @hash WHERE Id = @id",

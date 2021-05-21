@@ -20,8 +20,8 @@ namespace Delivery.Domain.UnitTests
             // Arrange
             int total = 50;
             int newId = total + 1;
-            var addresses = AddressObjectMother.CreateRandomAddressRepository(total);
-            var address = AddressObjectMother.CreateRandomAddress(newId);
+            var addresses = AddressObjectMother.CreateAddressRepository(total);
+            var address = AddressObjectMother.CreateAddress(newId);
 
             // Act
             addresses.Insert(address);
@@ -36,7 +36,7 @@ namespace Delivery.Domain.UnitTests
             // Arrange
             int total = 50;
             int id = RandomInt(1, total);
-            var addresses = AddressObjectMother.CreateRandomAddressRepository(total);
+            var addresses = AddressObjectMother.CreateAddressRepository(total);
             var address = addresses.Find(id);
 
             string city = "Wilno";
@@ -60,7 +60,7 @@ namespace Delivery.Domain.UnitTests
             // Arrange
             int total = 50;
             int id = RandomInt(1, total);
-            var addresses = AddressObjectMother.CreateRandomAddressRepository(total);
+            var addresses = AddressObjectMother.CreateAddressRepository(total);
 
             // Act
             addresses.Delete(id);

@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
+using static Delivery.Generic.Utils.Randoms;
+
 using System.Linq;
 
 namespace Delivery.Infrastructure.Repositories.InMemory
@@ -13,7 +15,9 @@ namespace Delivery.Infrastructure.Repositories.InMemory
         private List<Address> addresses;
         private List<Nation> nations;
 
-        public AddressIM()
+        public int Count => addresses.Count;
+
+        public AddressIM(int addressesCnt = 0)
         {
             nations = new List<Nation>()
             {
@@ -24,19 +28,17 @@ namespace Delivery.Infrastructure.Repositories.InMemory
                 new Nation() { Id = 5, Name = "Słowacja" },
             };
 
-            addresses = new List<Address>
-            {
-                new Address { Id = 1, Nation = nations[0], City = "Warszawa", Street = "Kilińskiego", Nr = "153/11", ZipCode = "12-445" },
-                new Address { Id = 2, Nation = nations[0], City = "Kielce", Street = "Oźnicza", Nr = "12", ZipCode = "01-325" },
-                new Address { Id = 3, Nation = nations[0], City = "Oddzierżowice", Street = "Kuźnicza", Nr = "53", ZipCode = "55-525" },
-                new Address { Id = 4, Nation = nations[0], City = "Zamość Śląska", Street = "Willamów", Nr = "512", ZipCode = "34-321" },
-                new Address { Id = 5, Nation = nations[0], City = "Iława Górna", Street = "Bratki", Nr = "5a", ZipCode = "38-173" },
-                new Address { Id = 6, Nation = nations[0], City = "Sopotnia Wielka", Street = "Wodospad", Nr = "16", ZipCode = "88-991" },
-                new Address { Id = 7, Nation = nations[0], City = "Dąbki", Street = "Portowa", Nr = "11", ZipCode = "25-123" },
-                new Address { Id = 8, Nation = nations[1], City = "New York", Street = "8 Av", Nr = "22-32", ZipCode = "12-11234" },
-                new Address { Id = 9, Nation = nations[2], City = "Oslo", Street = "Main Street", Nr = "1A4", ZipCode = "001-2123" },
-                new Address { Id = 10, Nation = nations[4], City = "Bratysława", Street = "Marketer", Nr = "577", ZipCode = "0682332" },
-            };
+            addresses = new List<Address>();
+            for (int i = 1; i <= addressesCnt+1; i++)
+                addresses.Add(new Address
+                {
+                    Id = i,
+                    Nation = nations[RandomInt(0, nations.Count-1)],
+                    City = RandomCity(),
+                    Nr = RandomInt(1, 10000).ToString(),
+                    Street = RandomStreet(),
+                    ZipCode = RandomZipCode()
+                });
                     
         }
 

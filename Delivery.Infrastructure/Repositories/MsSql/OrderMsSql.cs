@@ -43,7 +43,10 @@ namespace Delivery.Infrastructure.Repositories.MsSql
 
         public IEnumerable<Order> GetClientOrders(Client c)
         {
-            throw new NotImplementedException();
+            var res = MsSqlConnector.Instance.Connection.Query<Order>(
+                "SELECT * FROM Orders WHERE OwnerId = @id", new { id = c.Id });
+
+            return res;
         }
 
         public void Insert(Order item)

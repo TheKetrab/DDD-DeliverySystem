@@ -9,6 +9,18 @@ namespace Delivery.Infrastructure.Repositories.MsSql
 {
     public class AddressMsSql : IAddressRepository
     {
+        public int Count
+        {
+            get
+            {
+                int cnt = MsSqlConnector.Instance.Connection.ExecuteScalar<int>(
+                    "SELECT COUNT(*) FROM Addresses");
+
+                return cnt;
+            }
+        }
+
+
         public void Delete(int id)
         {
             MsSqlConnector.Instance.Connection.Query(

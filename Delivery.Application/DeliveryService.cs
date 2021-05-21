@@ -6,6 +6,7 @@ using System.Text;
 using System.Linq;
 
 using Delivery.Infrastructure.Repositories.InMemory;
+using Delivery.Infrastructure.Repositories.MsSql;
 using Delivery.Domain.Model.Addresses.Repositories;
 using Delivery.Domain.Model.Clients.Repositories;
 using Delivery.Domain.Model.Orders.Repositories;
@@ -25,11 +26,17 @@ namespace Delivery.Application
 
         public DeliveryService()
         {
-            addresses = new AddressIM();
-            clients = new ClientIM(addresses);
-            orders = new OrderIM(addresses, clients);
-            products = new ProductIM();
-            history = new OrderHistoryIM();
+            //addresses = new AddressIM();
+            //clients = new ClientIM(addresses);
+            //orders = new OrderIM(addresses, clients);
+            //products = new ProductIM();
+            //history = new OrderHistoryIM();
+
+            addresses = new AddressMsSql();
+            clients = new ClientMsSql();
+            orders = new OrderMsSql();
+            products = new ProductMsSql();
+            history = new OrderHistoryMsSql();
         }
 
 
@@ -52,7 +59,7 @@ namespace Delivery.Application
         public bool VerifyPassword(string email, string password)
         {
             var client = clients.GetClientByEmail(email);
-            var hash = Encryption.ComputeUtf8StringHash(password);
+            var hash = Encryption.ComputeHexStringHash(password);
 
             return client.Hash == hash;
         }
