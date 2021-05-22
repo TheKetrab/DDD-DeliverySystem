@@ -21,7 +21,7 @@ namespace Delivery.Domain.UnitTests
 
             // Act
             var client = clients.Find(id);
-            clients.SetPassword(client, newPassword);
+            client.SetPassword(newPassword);
 
             // Assert
             Assert.AreEqual(

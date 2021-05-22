@@ -8,19 +8,20 @@ namespace Delivery.ObjectMothers
 {
     public static class ApplicationServicesObjectMother
     {
-        public IDeliveryService CreateDeliveryServiceIM()
+        public static DeliveryService CreateDeliveryServiceIM()
         {
-            return new DeliveryService()
-            {
-                
-            };
+            return new DeliveryService(new IMDeliveryProvider());
         }
 
-        public IDeliveryService CreateDeliveryServiceMsSQL()
+        public static DeliveryService CreateDeliveryServiceMsSQL()
         {
-            return new DeliveryService();
+            return new DeliveryService(new MsSqlDeliveryProvider());
         }
 
+        public static DeliveryService CreateDeliveryServiceIMEmpty()
+        {
+            return new DeliveryService(new IMDeliveryProviderEmpty());
+        }
 
     }
 }

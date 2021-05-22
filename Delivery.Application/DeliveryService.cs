@@ -59,6 +59,7 @@ namespace Delivery.Application
         public void CreateNewOrder(Order o)
         {
             orders.Insert(o);
+            history.AddAction(null, o, OrderAction.Create, DateTime.Now);
         }
 
         public void CancelOrder(Order o)
