@@ -1,6 +1,7 @@
 ﻿using System;
 
 using Delivery.Application;
+using Delivery.Domain.Model.Clients;
 using Delivery.Generic.Security;
 
 namespace Presentation.ConsoleApp
@@ -14,20 +15,22 @@ namespace Presentation.ConsoleApp
             Console.WriteLine(" ----- DELIVERY SYSTEM ----- ");
             Console.WriteLine(" > Login first, put your email and password");
             Console.Write(" > Email (admin@gmail.com): ");
-            string email = "mail2@gmail.com";//Console.ReadLine();
+            string email = "admin@gmail.com";//Console.ReadLine();
             Console.Write(" > Password (abc): ");
             string password = "abc";// Console.ReadLine();
 
-            if (!service.VerifyPassword(email, password))
+            Client currentClient = service.GetClientByEmail(email);
+
+            if (!service.VerifyPassword(currentClient, password))
             {
                 Console.WriteLine(" > Wrong credentials!");
                 return;
             }
 
             Console.WriteLine(" > Your orders:");
-            foreach (var o in service.GetOwnOrders(email))
-                Console.WriteLine("\tAddress: {0}\tLatest date: {1}",
-                    o.DeliveryAddress.ToString(), o.LatestDeliveryDate);
+            foreach (var o in service.GetClientOrders(currentClient))
+                Console.WriteLine("\tLatest date: {0}\tAddress: {1}",
+                    o.LatestDeliveryDate, o.DeliveryAddress.ToString());
 
             Console.ReadLine();            
         }

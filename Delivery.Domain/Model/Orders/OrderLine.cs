@@ -5,7 +5,7 @@ using Delivery.Domain.Model.Products;
 
 namespace Delivery.Domain.Model.Orders
 {
-    class OrderLine
+    public class OrderLine
     {
         public Product Product { get; set; }
         public int Quantity { get; set; }
