@@ -11,15 +11,13 @@ using static Delivery.Generic.Utils.Randoms;
 
 namespace Delivery.Infrastructure.Repositories.InMemory
 {
-    public class ClientIM : IClientRepository
+    public class ClientIM : BaseImplIM<Client>, IClientRepository
     {
         List<Client> clients;
 
-        public int Count => clients.Count;
-
         public ClientIM(IAddressRepository addresses, int clientsCnt = 0)
         {
-            clients = new List<Client>();
+            clients = _entities;
             for (int i = 1; i <= clientsCnt; i++)
                 clients.Add(new Client
                 {
@@ -45,35 +43,10 @@ namespace Delivery.Infrastructure.Repositories.InMemory
             });
         }
 
-        public void Delete(int id)
-        {
-            Client client = Find(id);
-            clients.Remove(client);
-        }
-
-        public Client Find(int id)
-        {
-            return clients.Find(c => c.Id == id);
-        }
-
-        public IEnumerable<Client> FindAll()
-        {
-            return new List<Client>(clients);
-        }
-
         public Client GetClientByEmail(string email)
         {
             return clients.Find(c => c.Email == email);
         }
 
-        public void Insert(Client client)
-        {
-            clients.Add(client);
-        }
-
-        public void DeleteAll()
-        {
-            clients.RemoveAll(x => true);
-        }
     }
 }

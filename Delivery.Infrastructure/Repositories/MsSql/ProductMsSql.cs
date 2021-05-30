@@ -7,44 +7,15 @@ using Dapper;
 
 namespace Delivery.Infrastructure.Repositories.MsSql
 {
-    public class ProductMsSql : IProductRepository
+    public class ProductMsSql : BaseImplMsSql<Product>, IProductRepository
     {
-        public int Count => throw new NotImplementedException();
+        string productsTN = "Products";
+        public override string Table => productsTN;
 
-        public void Delete(int id)
-        {
-            MsSqlConnector.Instance.Connection.Query(
-                "DELETE * FROM Products WHERE Id = @id", new { id });
-        }
-
-        public void DeleteAll()
-        {
-            MsSqlConnector.Instance.Connection.Query("DELETE * FROM Products");
-        }
-
-        public Product Find(int id)
-        {
-            var res = MsSqlConnector.Instance.Connection.Query<Product>(
-                "SELECT * FROM Products WHERE Id = @id", new { id }).AsList();
-
-            if (res.Count == 0)
-                throw new Exception();
-
-            return res[0];
-        }
-
-        public IEnumerable<Product> FindAll()
-        {
-            var res = MsSqlConnector.Instance.Connection
-                .Query<Product>("SELECT * FROM Products");
-
-            return res;
-        }
-
-        public void Insert(Product item)
+        public override void Insert(Product item)
         {
             MsSqlConnector.Instance.Connection.Execute(
-               "INSERT INTO Products(Name,DeliveryCost,Weight,Description) " +
+               "INSERT INTO " + productsTN + "(Name,DeliveryCost,Weight,Description) " +
                "VALUES (@name, @cost, @weight, @description)",
                new
                {
@@ -53,6 +24,16 @@ namespace Delivery.Infrastructure.Repositories.MsSql
                    weight = item.Weight,
                    description = item.Description
                });
+        }
+
+        public override void Update(Product entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Update(IList<Product> entities)
+        {
+            throw new NotImplementedException();
         }
     }
 }

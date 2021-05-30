@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Delivery.Generic.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Delivery.Domain.Model.Addresses
 {
-    public class Address
+    public class Address : Entity
     {
         public int Id { get; set; }
         public Nation Nation { get; set; }

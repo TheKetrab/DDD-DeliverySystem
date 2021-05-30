@@ -10,26 +10,16 @@ using Delivery.Domain.Model.Addresses.Repositories;
 
 namespace Delivery.Infrastructure.Repositories.MsSql
 {
-    public class OrderMsSql : IOrderRepository
+    public class OrderMsSql : BaseImplMsSql<Order>, IOrderRepository
     {
-        public int Count => throw new NotImplementedException();
+        string ordersTN = "Orders";
+        string orderStatusTN = "OrderStatus";
 
-        public void Delete(int id)
+        public override string Table => ordersTN;
+
+        public override Order Find(int id)
         {
-            MsSqlConnector.Instance.Connection.Query(
-                "DELETE * FROM Orders WHERE Id = @id", new { id });
-        }
-
-        public void DeleteAll()
-        {
-            MsSqlConnector.Instance.Connection.Query("DELETE * FROM Orders");
-        }
-
-        public Order Find(int id)
-        {
-            Order o = MsSqlConnector.Instance.Connection.QuerySingle<Order>(
-                "SELECT * FROM Orders WHERE Id = @id", new { id });
-
+            Order o = base.Find(id);
             if (o == null)
                 throw new Exception();
 
@@ -46,18 +36,10 @@ namespace Delivery.Infrastructure.Repositories.MsSql
             return o;
         }
 
-        public IEnumerable<Order> FindAll()
-        {
-            var res = MsSqlConnector.Instance.Connection
-                .Query<Order>("SELECT * FROM Orders");
-
-            return res;
-        }
-
         public IEnumerable<Order> GetOrdersByClient(Client c)
         {
             var orders = MsSqlConnector.Instance.Connection.Query<Order>(
-                "SELECT * FROM Orders WHERE OwnerId = @id", new { id = c.Id });
+                "SELECT * FROM " + ordersTN + " WHERE OwnerId = @id", new { id = c.Id });
 
             IOrderRepository orderRepository = new OrderMsSql();
 
@@ -68,15 +50,15 @@ namespace Delivery.Infrastructure.Repositories.MsSql
             return res;
         }
 
-        public void Insert(Order item)
+        public override void Insert(Order item)
         {
             int statusid = MsSqlConnector.Instance.Connection.ExecuteScalar<int>(
-                "SELECT * FROM OrderStatus WHERE Status LIKE @status",
+                "SELECT * FROM " + orderStatusTN + " WHERE Status LIKE @status",
                 new { status = item.Status.ToString() }
             );
 
             MsSqlConnector.Instance.Connection.Execute(
-               "INSERT INTO Orders(DeliveryAddressId,OwnerId,Status,LatestDate) " +
+               "INSERT INTO " + ordersTN + "(DeliveryAddressId,OwnerId,Status,LatestDate) " +
                "VALUES (@daid, @ownerid, @statusid, @latestdate)",
                new
                {
@@ -86,6 +68,16 @@ namespace Delivery.Infrastructure.Repositories.MsSql
                    item.LatestDeliveryDate
                });
 
+        }
+
+        public override void Update(Order entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Update(IList<Order> entities)
+        {
+            throw new NotImplementedException();
         }
     }
 }

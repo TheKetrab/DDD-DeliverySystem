@@ -11,15 +11,13 @@ using static Delivery.Generic.Utils.Randoms;
 
 namespace Delivery.Infrastructure.Repositories.InMemory
 {
-    public class OrderIM : IOrderRepository
+    public class OrderIM : BaseImplIM<Order>, IOrderRepository
     {
         List<Order> orders;
 
-        public int Count => orders.Count;
-
         public OrderIM(IAddressRepository addresses, IClientRepository clients, int ordersCnt = 0)
         {
-            orders = new List<Order>();
+            orders = _entities;
             for (int i = 1; i <= ordersCnt; i++)
                 orders.Add(new Order
                 {
@@ -31,21 +29,6 @@ namespace Delivery.Infrastructure.Repositories.InMemory
                 });
         }
 
-        public void Delete(int id)
-        {
-            orders.RemoveAt(id);
-        }
-
-        public Order Find(int id)
-        {
-            return orders.Find(o => o.Id == id);
-        }
-
-        public IEnumerable<Order> FindAll()
-        {
-            return new List<Order>(orders);
-        }
-
         public IEnumerable<Order> GetOrdersByClient(Client c)
         {
             var res = from o in orders
@@ -55,14 +38,5 @@ namespace Delivery.Infrastructure.Repositories.InMemory
             return res;
         }
 
-        public void Insert(Order order)
-        {
-            orders.Add(order);
-        }
-
-        public void DeleteAll()
-        {
-            orders.RemoveAll(x => true);
-        }
     }
 }

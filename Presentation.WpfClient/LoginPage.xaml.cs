@@ -16,21 +16,13 @@ using System.Windows.Shapes;
 namespace Presentation.WpfClient
 {
     /// <summary>
-    /// Logika interakcji dla klasy MainWindow.xaml
+    /// Logika interakcji dla klasy LoginPage.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class LoginPage : Page
     {
-        public MainWindow()
+        public LoginPage()
         {
             InitializeComponent();
-
-            BrushConverter bc = new BrushConverter();
-            Brush brush = (Brush)bc.ConvertFrom("#e8d055");
-            brush.Freeze();
-            this.Background = brush;
-
-            //this.Content = new LoginPage();
-            this.Content = new MainPage();
         }
     }
 }

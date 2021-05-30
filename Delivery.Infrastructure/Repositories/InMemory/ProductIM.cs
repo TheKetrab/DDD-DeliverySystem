@@ -8,15 +8,13 @@ using static Delivery.Generic.Utils.Randoms;
 
 namespace Delivery.Infrastructure.Repositories.InMemory
 {
-    public class ProductIM : IProductRepository
+    public class ProductIM : BaseImplIM<Product>, IProductRepository
     {
         List<Product> products;
 
-        public int Count => products.Count;
-
         public ProductIM(int cnt = 0)
         {
-            products = new List<Product>();
+            products = _entities;
             for (int i = 1; i <= cnt; i++)
                 products.Add(new Product
                 {
@@ -27,30 +25,6 @@ namespace Delivery.Infrastructure.Repositories.InMemory
                 });
         }
 
-        public void Delete(int id)
-        {
-            products.RemoveAt(id);
-        }
-
-        public Product Find(int id)
-        {
-            return products.Find(p => p.Id == id);
-        }
-
-        public IEnumerable<Product> FindAll()
-        {
-            return new List<Product>(products);
-        }
-
-        public void Insert(Product product)
-        {
-            products.Add(product);
-        }
-
-        public void DeleteAll()
-        {
-            products.RemoveAll(x => true);
-        }
 
     }
 }

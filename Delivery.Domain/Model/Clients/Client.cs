@@ -4,11 +4,12 @@ using System.Text;
 
 
 using Delivery.Domain.Model.Addresses;
+using Delivery.Generic.Interfaces;
 using Delivery.Generic.Security;
 
 namespace Delivery.Domain.Model.Clients
 {
-    public class Client
+    public class Client : Entity
     {
         public int Id { get; set; }
         public string Name { get; set; }

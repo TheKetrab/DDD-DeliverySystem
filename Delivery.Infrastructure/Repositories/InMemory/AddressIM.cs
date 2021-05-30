@@ -7,15 +7,14 @@ using System.Text;
 using static Delivery.Generic.Utils.Randoms;
 
 using System.Linq;
+using Delivery.Generic.Interfaces;
 
 namespace Delivery.Infrastructure.Repositories.InMemory
 {
-    public class AddressIM : IAddressRepository
+    public class AddressIM : BaseImplIM<Address>, IAddressRepository
     {
         private List<Address> addresses;
         private List<Nation> nations;
-
-        public int Count => addresses.Count;
 
         public AddressIM(int addressesCnt = 0)
         {
@@ -28,7 +27,7 @@ namespace Delivery.Infrastructure.Repositories.InMemory
                 new Nation() { Id = 5, Name = "Słowacja" },
             };
 
-            addresses = new List<Address>();
+            addresses = _entities;
             for (int i = 1; i <= addressesCnt+1; i++)
                 addresses.Add(new Address
                 {
@@ -40,32 +39,6 @@ namespace Delivery.Infrastructure.Repositories.InMemory
                     ZipCode = RandomZipCode()
                 });
                     
-        }
-
-        public void Delete(int id)
-        {
-            var address = Find(id);
-            addresses.Remove(address);
-        }
-
-        public Address Find(int id)
-        {
-            return addresses.Find(a => a.Id == id);
-        }
-
-        public IEnumerable<Address> FindAll()
-        {
-            return new List<Address>(addresses);
-        }
-
-        public void Insert(Address address)
-        {
-            addresses.Add(address);
-        }
-
-        public void DeleteAll()
-        {
-            addresses.RemoveAll(x => true);
         }
     }
 }

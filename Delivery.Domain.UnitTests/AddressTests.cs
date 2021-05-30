@@ -61,9 +61,10 @@ namespace Delivery.Domain.UnitTests
             int total = 50;
             int id = RandomInt(1, total);
             var addresses = AddressObjectMother.CreateAddressRepository(total);
+            var address = addresses.Find(id);
 
             // Act
-            addresses.Delete(id);
+            addresses.Delete(address);
 
             // Assert
             Assert.IsNull(addresses.Find(id));

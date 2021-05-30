@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Linq;
 
 namespace Delivery.Generic.Interfaces
 {
-    public interface IQueryRepository<T>
+    public interface IQueryRepository<T> where T : Entity
     {
         int Count { get; }
-        T Find(int id);
-        IEnumerable<T> FindAll();
+        T Find(int entityId);
+        IQueryable<T> FindAll();
     }
 }

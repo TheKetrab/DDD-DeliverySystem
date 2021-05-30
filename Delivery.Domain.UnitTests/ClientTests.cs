@@ -73,9 +73,10 @@ namespace Delivery.Domain.UnitTests
             int total = 50;
             int id = RandomInt(1, total);
             var clients = ClientObjectMother.CreateClientsRepository(total);
+            var client = clients.Find(id);
 
             // Act
-            clients.Delete(id);
+            clients.Delete(client);
 
             // Assert
             Assert.IsNull(clients.Find(id));
