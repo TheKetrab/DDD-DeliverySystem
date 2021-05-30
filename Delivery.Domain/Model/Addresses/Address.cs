@@ -7,7 +7,7 @@ namespace Delivery.Domain.Model.Addresses
 {
     public class Address : Entity
     {
-        public int Id { get; set; }
+        public override int Id { get; set; }
         public Nation Nation { get; set; }
         public string City { get; set; }
         public string Street { get; set; }

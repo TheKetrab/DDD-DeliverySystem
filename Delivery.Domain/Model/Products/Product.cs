@@ -7,7 +7,7 @@ namespace Delivery.Domain.Model.Products
 {
     public class Product : Entity
     {
-        public int Id { get; set; }
+        public override int Id { get; set; }
         public string Name { get; set; }
         public decimal DeliveryCost { get; set; }
         public float Weight { get; set; }

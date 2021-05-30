@@ -9,8 +9,13 @@ namespace Delivery.Infrastructure.Repositories.MsSql
 {
     public class ProductMsSql : BaseImplMsSql<Product>, IProductRepository
     {
-        string productsTN = "Products";
+        string productsTN;
         public override string Table => productsTN;
+
+        public ProductMsSql(string productsTN = "Products")
+        {
+            this.productsTN = productsTN;
+        }
 
         public override void Insert(Product item)
         {

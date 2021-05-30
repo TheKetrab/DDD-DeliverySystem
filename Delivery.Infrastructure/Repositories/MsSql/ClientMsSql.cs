@@ -13,10 +13,15 @@ namespace Delivery.Infrastructure.Repositories.MsSql
     public class ClientMsSql : BaseImplMsSql<Client>, IClientRepository
     {
 
-        string clientsTN = "Clients";
+        string clientsTN;
 
         public override string Table => clientsTN;
 
+
+        public ClientMsSql(string clientsTN = "Clients")
+        {
+            this.clientsTN = clientsTN;
+        }
 
         public override Client Find(int id)
         {

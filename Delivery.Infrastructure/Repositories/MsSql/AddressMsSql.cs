@@ -9,11 +9,16 @@ namespace Delivery.Infrastructure.Repositories.MsSql
 {
     public class AddressMsSql : BaseImplMsSql<Address>, IAddressRepository
     {
-        string addressesTN = "Addresses";
-        string nationsTN = "Nations";
+        string addressesTN;
+        string nationsTN;
 
         public override string Table => addressesTN;
 
+        public AddressMsSql(string addressesTN = "Addresses", string nationsTN = "Nations")
+        {
+            this.addressesTN = addressesTN;
+            this.nationsTN = nationsTN;
+        }
 
         public override Address Find(int id)
         {

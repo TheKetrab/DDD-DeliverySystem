@@ -9,7 +9,7 @@ namespace Delivery.Domain.Model.Orders
 {
     public class Order : Entity
     {
-        public int Id { get; set; }
+        public override int Id { get; set; }
         public Address DeliveryAddress { get; set; }
         public Client Owner { get; set; }
         public Status Status { get; set; }

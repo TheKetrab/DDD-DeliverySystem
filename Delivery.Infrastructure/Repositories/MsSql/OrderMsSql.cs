@@ -12,10 +12,16 @@ namespace Delivery.Infrastructure.Repositories.MsSql
 {
     public class OrderMsSql : BaseImplMsSql<Order>, IOrderRepository
     {
-        string ordersTN = "Orders";
-        string orderStatusTN = "OrderStatus";
+        string ordersTN;
+        string orderStatusTN;
 
         public override string Table => ordersTN;
+
+        public OrderMsSql(string ordersTN = "Orders", string orderStatusTN = "OrderStatus")
+        {
+            this.ordersTN = ordersTN;
+            this.orderStatusTN = orderStatusTN;
+        }
 
         public override Order Find(int id)
         {

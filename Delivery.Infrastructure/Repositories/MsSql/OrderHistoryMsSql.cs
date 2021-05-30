@@ -10,8 +10,14 @@ namespace Delivery.Infrastructure.Repositories.MsSql
 {
     public class OrderHistoryMsSql : IOrderHistoryRepository
     {
-        string historyTN = "History";
-        string orderActionTN = "OrderAction";
+        string historyTN;
+        string orderActionTN;
+
+        public OrderHistoryMsSql(string historyTN = "History", string orderActionTN = "OrderAction")
+        {
+            this.historyTN = historyTN;
+            this.orderActionTN = orderActionTN;
+        }
 
         public void AddAction(Client client, Order order, OrderAction action, DateTime time = default, string description = "")
         {

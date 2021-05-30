@@ -13,9 +13,9 @@ namespace Delivery.ObjectMothers
             return new DeliveryService(new IMDeliveryProvider());
         }
 
-        public static DeliveryService CreateDeliveryServiceMsSQL()
+        public static DeliveryService CreateDeliveryServiceMsSQLTest()
         {
-            return new DeliveryService(new MsSqlDeliveryProvider());
+            return new DeliveryService(new MsSqlDeliveryProviderTest());
         }
 
         public static DeliveryService CreateDeliveryServiceIMEmpty()
