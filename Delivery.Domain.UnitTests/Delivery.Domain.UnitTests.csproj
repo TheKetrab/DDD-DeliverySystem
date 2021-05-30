@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="AddressTests.cs" />
     <Compile Include="ClientTests.cs" />
+    <Compile Include="MsSqlRepositoryTests.cs" />
     <Compile Include="ProductTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
