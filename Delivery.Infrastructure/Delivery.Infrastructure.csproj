@@ -4,14 +4,40 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <OutputPath>C:\Users\ketra\Desktop\KPABD\DeliverySystemAbc\DeliverySystemAbc\Output\</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>C:\Users\ketra\Desktop\KPABD\DeliverySystemAbc\DeliverySystemAbc\Output\</OutputPath>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Dapper" Version="2.0.90" />
+    <PackageReference Include="NHibernate" Version="5.3.8" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Delivery.Domain\Delivery.Domain.csproj" />
     <ProjectReference Include="..\Delivery.Generics\Delivery.Generic.csproj" />
+  </ItemGroup>
+
+  
+  <!-- HIBERNATE, copy and flat structure -->
+  <ItemGroup>
+    
+	<ContentWithTargetPath Include="Repositories\NHibernate\hibernate.cfg.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <TargetPath>hibernate.cfg.xml</TargetPath>
+    </ContentWithTargetPath>
+    <None Include="Repositories\NHibernate\hibernate.cfg.xml" />
+	
+    <ContentWithTargetPath Include="Repositories\NHibernate\Mappings\Address.hbm.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <TargetPath>HibernateMappings\Address.hbm.xml</TargetPath>
+    </ContentWithTargetPath>
+    <None Include="Repositories\NHibernate\Mappings\Address.hbm.xml" />
   </ItemGroup>
 
 </Project>

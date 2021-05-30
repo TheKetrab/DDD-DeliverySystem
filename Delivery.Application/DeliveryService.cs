@@ -36,7 +36,7 @@ namespace Delivery.Application
             history = provider.history;
         }
 
-        public DeliveryService() : this(new IMDeliveryProvider()) { }
+        public DeliveryService() : this(/*new IMDeliveryProvider()*/ new NHibernateDeliveryProvider()) { }
 
         #region Clients
         public void CreateNewClient(Client c)
