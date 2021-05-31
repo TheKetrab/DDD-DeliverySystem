@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Delivery.Infrastructure.Repositories.NHibernate.Mappings;
-using NHibernate;
-using NHibernate.Cfg;
-using NHibernate.Mapping.ByCode;
 
 namespace Delivery.Infrastructure.Repositories.NHibernate
 {
@@ -12,7 +8,6 @@ namespace Delivery.Infrastructure.Repositories.NHibernate
     {
         private static NHConnector _instance;
         private static object _lock = new object();
-        private ISessionFactory factory;
 
         public static NHConnector Instance
         {
@@ -25,10 +20,7 @@ namespace Delivery.Infrastructure.Repositories.NHibernate
                         if (_instance == null)
                         {
                             _instance = new NHConnector();
-
-                            var configuration = _instance.Configure();
-
-                            _instance.factory = configuration.BuildSessionFactory();
+                            _instance.Provider = new SessionProvider();
                         }
                     }
                 }
@@ -36,23 +28,7 @@ namespace Delivery.Infrastructure.Repositories.NHibernate
                 return _instance;
             }
         }
-        public ISession OpenSession()
-        {
-            return factory.OpenSession();
-        }
 
-
-        private Configuration Configure()
-        {
-            var mapper = new ModelMapper();
-            mapper.AddMapping(typeof(ClientMapping));
-            mapper.AddMapping(typeof(OrderMapping));
-            var hbmMappings = mapper.CompileMappingForAllExplicitlyAddedEntities();
-
-            Configuration configuration = new Configuration().Configure();
-            configuration.AddMapping(hbmMappings);
-
-            return configuration;
-        }
+        public SessionProvider Provider { get; private set; }
     }
 }

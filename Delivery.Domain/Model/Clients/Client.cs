@@ -29,5 +29,23 @@ namespace Delivery.Domain.Model.Clients
             Hash = Encryption.ComputeHexStringHash(password);
         }
 
+        public override bool Equals(Object obj)
+        {
+            if (obj is Client)
+            {
+                var that = obj as Client;
+                return this.Id == that.Id
+                    && this.Name == that.Name
+                    && this.Email == that.Email
+                    && this.Hash == that.Hash
+                    && this.Role == that.Role
+                    && this.Address.Equals(that.Address)
+                    && this.Phone == that.Phone
+                    ;
+            }
+
+            return false;
+        }
+
     }
 }

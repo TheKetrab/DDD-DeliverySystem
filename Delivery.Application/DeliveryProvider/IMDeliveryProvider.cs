@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Delivery.Application
 {
-    public class IMDeliveryProvider : DeliveryProvider
+    public class IMDeliveryProvider : IMDeliveryProviderEmpty
     {
         public IMDeliveryProvider()
         {

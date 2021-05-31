@@ -2,11 +2,11 @@
 CREATE OR ALTER PROCEDURE DeleteForeignKeys(@tablename varchar(MAX)) AS
 BEGIN
 
-    DECLARE @constraint nvarchar(MAX) = CONCAT('FK__',@tablename,'__%');
-
     -- cursor
-	DECLARE c_FKeys CURSOR FOR		
-		SELECT name FROM sys.foreign_keys WHERE name LIKE @constraint
+	DECLARE c_FKeys CURSOR FOR	
+        SELECT fk.name FKName FROM sys.tables t
+            JOIN sys.foreign_keys fk ON fk.parent_object_id = t.object_id
+            WHERE t.name = @tablename
 	OPEN c_FKeys
 	
 	DECLARE @c_FKey nvarchar(100);
@@ -52,7 +52,6 @@ DROP TABLE IF EXISTS History;
 
 GO
 
--- entities
 CREATE TABLE Nations (
     -- 4 + 60 = 64
     Id              INT IDENTITY(1,1) PRIMARY KEY,
@@ -122,7 +121,6 @@ CREATE TABLE OrderDetails (
     FOREIGN KEY (OrderLineId) REFERENCES OrderLines(Id)
 )
 
-
 CREATE TABLE History (
     Id              INT IDENTITY(1,1) PRIMARY KEY,
     ClientId        INT NOT NULL,
@@ -134,4 +132,3 @@ CREATE TABLE History (
     FOREIGN KEY (ClientId) REFERENCES Clients(Id),
     FOREIGN KEY (OrderId) REFERENCES Orders(Id)
 );
-

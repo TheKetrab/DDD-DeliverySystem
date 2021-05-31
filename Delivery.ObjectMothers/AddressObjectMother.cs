@@ -15,7 +15,7 @@ namespace Delivery.ObjectMothers
                 Id = (i < 0) ? 1 : i,
                 City = "Warszawa",
                 Nation = new Nation { Id = 1, Name = "Polska" },
-                Nr = "11",
+                Nr = "32",
                 Street = "TheStreet",
                 ZipCode = "01-234"
             };

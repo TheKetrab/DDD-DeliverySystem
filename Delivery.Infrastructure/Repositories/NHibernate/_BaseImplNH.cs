@@ -13,9 +13,16 @@ namespace Delivery.Infrastructure.Repositories.NHibernate
 {
     public abstract class BaseImplNH<T> : IRepository<T> where T : Entity
     {
+        private SessionProvider _provider;
+
+        public BaseImplNH(SessionProvider provider)
+        {
+            _provider = provider;
+        }
+
         protected ISession OpenSession()
         {
-            return NHConnector.Instance.OpenSession();
+            return _provider.OpenSession();
         }
 
         // ABSTRACT
@@ -26,7 +33,7 @@ namespace Delivery.Infrastructure.Repositories.NHibernate
         public virtual T Find(int entityId)
         {
             using (var session = OpenSession())
-            {
+            {                
                 return session.Get<T>(entityId);
             }
         }
@@ -52,7 +59,10 @@ namespace Delivery.Infrastructure.Repositories.NHibernate
         public virtual void Delete(T entity)
         {
             using (var session = OpenSession())
+            {
                 session.Delete(entity);
+                session.Flush();
+            }
         }
 
         public virtual void Delete(IList<T> entities)
@@ -61,9 +71,10 @@ namespace Delivery.Infrastructure.Repositories.NHibernate
             {
                 foreach (var e in entities)
                     session.Delete(e);
+
+                session.Flush();
             }
         }
-
         public virtual void DeleteAll()
         {
             using (var session = OpenSession())
@@ -101,7 +112,6 @@ namespace Delivery.Infrastructure.Repositories.NHibernate
                 session.Flush();
             }
         }
-
 
     }
 }

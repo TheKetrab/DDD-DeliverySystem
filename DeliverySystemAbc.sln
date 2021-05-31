@@ -33,10 +33,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Delivery.Application.UnitTe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Delivery.Domain.UnitTests", "Delivery.Domain.UnitTests\Delivery.Domain.UnitTests.csproj", "{B5346E83-04C2-4938-BF4B-ABB76522BAE2}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SqlQueries", "SqlQueries", "{D66DDFE8-8695-4CCB-9BD9-41184FCF3972}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SqlScripts", "SqlScripts", "{D66DDFE8-8695-4CCB-9BD9-41184FCF3972}"
 	ProjectSection(SolutionItems) = preProject
-		SqlQueries\CreateTables.sql = SqlQueries\CreateTables.sql
-		SqlQueries\RandomData.sql = SqlQueries\RandomData.sql
+		SqlScripts\CreateTables.sql = SqlScripts\CreateTables.sql
+		CreateTestDatabase.sql = CreateTestDatabase.sql
+		DeleteTestDatabase.sql = DeleteTestDatabase.sql
+		SqlScripts\RandomData.sql = SqlScripts\RandomData.sql
 	EndProjectSection
 EndProject
 Global

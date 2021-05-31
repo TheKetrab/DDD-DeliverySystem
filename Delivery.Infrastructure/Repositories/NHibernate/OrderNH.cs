@@ -11,6 +11,8 @@ namespace Delivery.Infrastructure.Repositories.NHibernate
     public class OrderNH : BaseImplNH<Order>, IOrderRepository
     {
         public override string Table => "Order";
+        public OrderNH(SessionProvider p) : base(p) { }
+
         public IEnumerable<Order> GetOrdersByClient(Client c)
         {
             using (var session = OpenSession())

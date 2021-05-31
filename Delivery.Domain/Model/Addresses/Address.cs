@@ -22,5 +22,22 @@ namespace Delivery.Domain.Model.Addresses
                 );
 
         }
+
+        public override bool Equals(Object obj)
+        {
+            if (obj is Address)
+            {
+                var that = obj as Address;
+                return this.Id == that.Id
+                    && this.Nation.Id == that.Nation.Id
+                    && this.City == that.City
+                    && this.Street == that.Street
+                    && this.Nr == that.Nr
+                    && this.ZipCode == that.ZipCode
+                    ;
+            }
+
+            return false;
+        }
     }
 }

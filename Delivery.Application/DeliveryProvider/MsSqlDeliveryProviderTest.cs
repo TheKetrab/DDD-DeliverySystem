@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Delivery.Application
 {
-    public class MsSqlDeliveryProviderTest : DeliveryProvider
+    public class MsSqlDeliveryProviderTest : MsSqlDeliveryProvider
     {
         public MsSqlDeliveryProviderTest()
         {

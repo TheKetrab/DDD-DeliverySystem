@@ -16,11 +16,11 @@ namespace Delivery.ObjectMothers
             return new Client
             {
                 Id = (i < 0) ? 1 : i,
-                Address = AddressObjectMother.CreateAddress(),
+                Address = RepositoryObjectMother.CreateAddressRepository().Find(1),
                 Email = "abc@gmail.com",
-                Hash = "",
-                Name = "",
-                Phone = "",
+                Hash = "HASH",
+                Name = "Client" + i,
+                Phone = "0123456789",
                 Role = Role.User
             };
         }

@@ -9,6 +9,14 @@ namespace Delivery.Infrastructure.Repositories.NHibernate
 {
     public class OrderHistoryNH : IOrderHistoryRepository
     {
+
+        private SessionProvider _provider;
+
+        public OrderHistoryNH(SessionProvider p)
+        {
+            _provider = p;
+        }
+
         public void AddAction(Client client, Order order, OrderAction action, DateTime time = default, string description = "")
         {
             throw new NotImplementedException();

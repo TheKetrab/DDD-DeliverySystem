@@ -13,6 +13,8 @@ namespace Delivery.Infrastructure.Repositories.NHibernate
     {
         public override string Table => "Client";
 
+        public ClientNH(SessionProvider p) : base(p) { }
+
         public Client GetClientByEmail(string email)
         {
             using (var session = OpenSession())

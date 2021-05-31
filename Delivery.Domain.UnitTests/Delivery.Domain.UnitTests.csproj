@@ -51,7 +51,6 @@
   <ItemGroup>
     <Compile Include="AddressTests.cs" />
     <Compile Include="ClientTests.cs" />
-    <Compile Include="MsSqlRepositoryTests.cs" />
     <Compile Include="ProductTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -66,6 +65,10 @@
     <ProjectReference Include="..\Delivery.Generics\Delivery.Generic.csproj">
       <Project>{f1036a8d-e7df-4b40-801e-b6245c5857a2}</Project>
       <Name>Delivery.Generic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Delivery.Infrastructure\Delivery.Infrastructure.csproj">
+      <Project>{b59428c0-fb4e-4dfe-b47d-c45675ee8ba4}</Project>
+      <Name>Delivery.Infrastructure</Name>
     </ProjectReference>
     <ProjectReference Include="..\Delivery.ObjectMothers\Delivery.ObjectMothers.csproj">
       <Project>{94e00fab-d407-4f6d-b3c7-a78dfa0de40b}</Project>

@@ -18,25 +18,24 @@ namespace Delivery.Domain.UnitTests
         public void CreateAddress()
         {
             // Arrange
-            int total = 50;
-            int newId = total + 1;
-            var addresses = AddressObjectMother.CreateAddressRepository(total);
+            int newId = 6039732;
+            var addresses = RepositoryObjectMother.CreateAddressRepository();
             var address = AddressObjectMother.CreateAddress(newId);
 
             // Act
             addresses.Insert(address);
+            int givenId = address.Id;
 
             // Assert
-            Assert.AreEqual(address, addresses.Find(newId));
+            Assert.AreEqual(address, addresses.Find(givenId));
         }
 
         [TestMethod]
         public void UpdateAddress()
         {
             // Arrange
-            int total = 50;
-            int id = RandomInt(1, total);
-            var addresses = AddressObjectMother.CreateAddressRepository(total);
+            int id = 3;
+            var addresses = RepositoryObjectMother.CreateAddressRepository();
             var address = addresses.Find(id);
 
             string city = "Wilno";
@@ -47,6 +46,7 @@ namespace Delivery.Domain.UnitTests
             address.City = city;
             address.Street = street;
             address.Nr = nr;
+            addresses.Update(address);
 
             // Assert
             Assert.AreEqual(city, addresses.Find(id).City);
@@ -58,9 +58,8 @@ namespace Delivery.Domain.UnitTests
         public void DeleteClient()
         {
             // Arrange
-            int total = 50;
-            int id = RandomInt(1, total);
-            var addresses = AddressObjectMother.CreateAddressRepository(total);
+            int id = 8;
+            var addresses = RepositoryObjectMother.CreateAddressRepository();
             var address = addresses.Find(id);
 
             // Act

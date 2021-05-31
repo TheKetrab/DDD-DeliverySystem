@@ -16,5 +16,7 @@ namespace Delivery.Infrastructure.Repositories.NHibernate
     public class AddressNH : BaseImplNH<Address>, IAddressRepository
     {
         public override string Table => "Address";
+
+        public AddressNH(SessionProvider p) : base(p) { }
     }
 }

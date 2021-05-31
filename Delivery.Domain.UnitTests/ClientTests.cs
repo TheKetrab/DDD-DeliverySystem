@@ -15,13 +15,14 @@ namespace Delivery.Domain.UnitTests
         public void ChangeClientPassword()
         {
             // Arrange
-            var clients = ClientObjectMother.CreateClientsRepository(50);
+            var clients = RepositoryObjectMother.CreateClientRepository();
             string newPassword = RandomString(15);
-            int id = 13;
+            int id = 5;
 
             // Act
             var client = clients.Find(id);
             client.SetPassword(newPassword);
+            clients.Update(client); // save changes
 
             // Assert
             Assert.AreEqual(
@@ -34,25 +35,24 @@ namespace Delivery.Domain.UnitTests
         public void CreateClient()
         {
             // Arrange
-            int total = 50;
-            int newId = total + 1;
-            var clients = ClientObjectMother.CreateClientsRepository(total);
+            int newId = 16337;
+            var clients = RepositoryObjectMother.CreateClientRepository();
             var client = ClientObjectMother.CreateUser(newId);
 
             // Act
             clients.Insert(client);
+            int givenId = client.Id;
 
             // Assert
-            Assert.AreEqual(client, clients.Find(newId));
+            Assert.AreEqual(client, clients.Find(givenId));
         }
 
         [TestMethod]
         public void UpdateClient()
         {
             // Arrange
-            int total = 50;
-            int id = RandomInt(1,total);
-            var clients = ClientObjectMother.CreateClientsRepository(total);
+            int id = 3;
+            var clients = RepositoryObjectMother.CreateClientRepository();
             var client = clients.Find(id);
             string name = RandomString(30);
             string phone = RandomPhoneNumber();
@@ -60,6 +60,7 @@ namespace Delivery.Domain.UnitTests
             // Act
             client.Name = name;
             client.Phone = phone;
+            clients.Update(client);
 
             // Assert
             Assert.AreEqual(name, clients.Find(id).Name);
@@ -70,9 +71,8 @@ namespace Delivery.Domain.UnitTests
         public void DeleteClient()
         {
             // Arrange
-            int total = 50;
-            int id = RandomInt(1, total);
-            var clients = ClientObjectMother.CreateClientsRepository(total);
+            int id = 8;
+            var clients = RepositoryObjectMother.CreateClientRepository();
             var client = clients.Find(id);
 
             // Act

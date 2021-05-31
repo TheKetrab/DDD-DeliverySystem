@@ -10,5 +10,7 @@ namespace Delivery.Infrastructure.Repositories.NHibernate
     public class ProductNH : BaseImplNH<Product>, IProductRepository
     {
         public override string Table => "Product";
+        public ProductNH(SessionProvider p) : base(p) { }
+
     }
 }

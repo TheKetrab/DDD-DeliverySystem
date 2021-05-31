@@ -9,11 +9,13 @@ namespace Delivery.Application
     {
         public NHibernateDeliveryProvider()
         {
-            addresses = new AddressNH();
-            clients = new ClientNH();
-            orders = new OrderNH();
-            products = new ProductNH();
-            history = new OrderHistoryNH();
+            SessionProvider p = new SessionProvider();
+
+            addresses = new AddressNH(p);
+            clients = new ClientNH(p);
+            orders = new OrderNH(p);
+            products = new ProductNH(p);
+            history = new OrderHistoryNH(p);
         }
     }
 }
