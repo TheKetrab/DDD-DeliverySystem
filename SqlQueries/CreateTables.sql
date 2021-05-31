@@ -50,107 +50,58 @@ DROP TABLE IF EXISTS OrderLines;
 DROP TABLE IF EXISTS OrderDetails;
 DROP TABLE IF EXISTS History;
 
-DROP TABLE IF EXISTS ClientRole;
-DROP TABLE IF EXISTS OrderStatus;
-DROP TABLE IF EXISTS OrderAction;
-
-GO
-
--- enums as tables -> normalized
-CREATE TABLE ClientRole (
-    Id              INT PRIMARY KEY,
-    Role            VARCHAR(20) NOT NULL UNIQUE
-);
-
-INSERT INTO ClientRole(Id,Role) VALUES
-    (1, 'Admin'),
-    (2, 'Moderator'),
-    (3, 'User'),
-    (4, 'PremiumUser')
-
-CREATE TABLE OrderStatus (
-    Id              INT PRIMARY KEY,
-    Status          VARCHAR(20) NOT NULL UNIQUE
-);
-
-INSERT INTO OrderStatus(Id,Status) VALUES
-    (1, 'Inactive'),
-    (2, 'WaitingForPayment'),
-    (3, 'Paid'),
-    (4, 'Sent'),
-    (5, 'Delivered'),
-    (6, 'Canceled')
-
-CREATE TABLE OrderAction (
-    Id              INT PRIMARY KEY,
-    Action          VARCHAR(20) NOT NULL UNIQUE
-);
-
-INSERT INTO OrderAction(Id,Action) VALUES
-    (1, 'Create'),
-    (2, 'Pay'),
-    (3, 'Cancel'),
-    (4, 'Delete'),
-    (5, 'Deliver')
-
 GO
 
 -- entities
 CREATE TABLE Nations (
+    -- 4 + 60 = 64
     Id              INT IDENTITY(1,1) PRIMARY KEY,
-    Name            VARCHAR(100) NOT NULL
+    Name            VARCHAR(60) NOT NULL
 );
 
 CREATE TABLE Addresses (
     Id              INT IDENTITY(1,1) PRIMARY KEY,
     NationId        INT NOT NULL DEFAULT 1,
-    City            VARCHAR(100) NOT NULL,
-    Street          VARCHAR(100),
-    Nr              VARCHAR(100) NOT NULL,
-    ZipCode         VARCHAR(100) NOT NULL,
+    City            VARCHAR(128) NOT NULL,
+    Street          VARCHAR(128),
+    Nr              VARCHAR(64) NOT NULL,
+    ZipCode         VARCHAR(16) NOT NULL,
 
     FOREIGN KEY (NationId) REFERENCES Nations(Id),
 );
 
-
-
 CREATE TABLE Clients (
     Id              INT IDENTITY(1,1) PRIMARY KEY,
-    Name            VARCHAR(100) NOT NULL,
-    Email           VARCHAR(100) NOT NULL UNIQUE,
-    Hash            VARCHAR(50),
-    Role            INT,
+    Name            VARCHAR(128) NOT NULL,
+    Email           VARCHAR(128) NOT NULL UNIQUE,
+    Hash            VARCHAR(64),
+    Role            VARCHAR(64),
     AddressId       INT,
-    Phone           VARCHAR(100) NOT NULL
+    Phone           VARCHAR(64) NOT NULL,
 
-    FOREIGN KEY (Role) REFERENCES ClientRole(Id),
     FOREIGN KEY (AddressId) REFERENCES Addresses(Id),
     CONSTRAINT CK_Client_NameNotEmpty CHECK (LEN(Name) >= 5)
 );
 
-
 CREATE TABLE Products (
     Id              INT IDENTITY(1,1) PRIMARY KEY,
-    Name            VARCHAR(100) NOT NULL,
+    Name            VARCHAR(64) NOT NULL,
     DeliveryCost    MONEY NOT NULL,
     Weight          FLOAT NOT NULL,
-    Description     VARCHAR(3000),
+    Description     VARCHAR(4096),
 
     CONSTRAINT CK_Product_NameNotEmpty CHECK (LEN(Name) > 3)
 );
-
-
 
 CREATE TABLE Orders (
     Id                  INT IDENTITY(1,1) PRIMARY KEY,
     DeliveryAddressId   INT NOT NULL,
     OwnerId             INT NOT NULL,
-    Status              INT NOT NULL,
+    Status              VARCHAR(64) NOT NULL,
     LatestDate          DATETIME,
 
     FOREIGN KEY (DeliveryAddressId) REFERENCES Addresses(Id),
-    FOREIGN KEY (OwnerId) REFERENCES Clients(Id),
-    FOREIGN KEY (Status) REFERENCES OrderStatus(Id)
+    FOREIGN KEY (OwnerId) REFERENCES Clients(Id)
 );
 
 CREATE TABLE OrderLines (
@@ -176,12 +127,11 @@ CREATE TABLE History (
     Id              INT IDENTITY(1,1) PRIMARY KEY,
     ClientId        INT NOT NULL,
     OrderId         INT NOT NULL,
-    Action          INT NOT NULL,
+    Action          VARCHAR(64),
     Description     VARCHAR(3000),
     Time            DATETIME NOT NULL DEFAULT GETDATE(),
 
     FOREIGN KEY (ClientId) REFERENCES Clients(Id),
-    FOREIGN KEY (OrderId) REFERENCES Orders(Id),
-    FOREIGN KEY (Action) REFERENCES OrderAction(Id)
+    FOREIGN KEY (OrderId) REFERENCES Orders(Id)
 );
 

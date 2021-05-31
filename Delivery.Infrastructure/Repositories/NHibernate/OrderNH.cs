@@ -13,8 +13,12 @@ namespace Delivery.Infrastructure.Repositories.NHibernate
         public override string Table => "Order";
         public IEnumerable<Order> GetOrdersByClient(Client c)
         {
-            // TODO
-            throw new NotImplementedException();
+            using (var session = OpenSession())
+            {
+                return session.Query<Order>()
+                    .Where(e => e.Owner == c)
+                    .ToList();
+            }
         }
     }
 }

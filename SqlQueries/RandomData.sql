@@ -25,23 +25,23 @@ INSERT INTO Addresses (NationId, City, Street, Nr, ZipCode) VALUES
 
 
 INSERT INTO Clients (Name,Email,Hash,Role,AddressID,Phone) VALUES
-    ('Admin','admin@gmail.com','0x1fd4c742b205b5ac36e555ebd85e4d3a428f1245dd6ce4dc',1,2,'+48 795 5530 09'),
-    ('Jesionowe Gitary - Baranowski','mail2@gmail.com','0x1fd4c742b205b5ac36e555ebd85e4d3a428f1245dd6ce4dc',3,5,'+48 435 234 471'),
-    ('Abramics Polska','mail3@gmail.com','0x1fd4c742b205b5ac36e555ebd85e4d3a428f1245dd6ce4dc',3,1,'+48 104 344 512'),
-    ('NY Abroad Company','mail4@gmail.com','0x1fd4c742b205b5ac36e555ebd85e4d3a428f1245dd6ce4dc',4,7,'+1 108 405 663'),
-    ('Almeria Dunno','mail5@gmail.com','0x1fd4c742b205b5ac36e555ebd85e4d3a428f1245dd6ce4dc',3,1,'+48 606 707 123')
+    ('Admin','admin@gmail.com','0x1fd4c742b205b5ac36e555ebd85e4d3a428f1245dd6ce4dc','Admin',2,'+48 795 5530 09'),
+    ('Jesionowe Gitary - Baranowski','mail2@gmail.com','0x1fd4c742b205b5ac36e555ebd85e4d3a428f1245dd6ce4dc','User',5,'+48 435 234 471'),
+    ('Abramics Polska','mail3@gmail.com','0x1fd4c742b205b5ac36e555ebd85e4d3a428f1245dd6ce4dc','User',1,'+48 104 344 512'),
+    ('NY Abroad Company','mail4@gmail.com','0x1fd4c742b205b5ac36e555ebd85e4d3a428f1245dd6ce4dc','PremiumUser',7,'+1 108 405 663'),
+    ('Almeria Dunno','mail5@gmail.com','0x1fd4c742b205b5ac36e555ebd85e4d3a428f1245dd6ce4dc','User',1,'+48 606 707 123')
 
 INSERT INTO Orders (DeliveryAddressId, OwnerId, Status, LatestDate) VALUES
-    (2, 1, 3, '20200122'),
-    (3, 1, 5, '20221028'),
-    (1, 2, 3, '20170317'),
-    (2, 2, 1, '20211231'),
-    (4, 2, 1, '20190914'),
-    (3, 3, 1, '20200803'),
-    (5, 3, 1, '20170201'),
-    (4, 4, 1, '20130819'),
-    (6, 5, 1, '20240514'),
-    (7, 5, 1, '20220214'),
-    (4, 5, 1, '20010101')
+    (2, 1, 'Paid', '20200122'),
+    (3, 1, 'Delivered', '20221028'),
+    (1, 2, 'WaitingForPayment', '20170317'),
+    (2, 2, 'Inactive', '20211231'),
+    (4, 2, 'Sent', '20190914'),
+    (3, 3, 'Sent', '20200803'),
+    (5, 3, 'Sent', '20170201'),
+    (4, 4, 'Delivered', '20130819'),
+    (6, 5, 'Paid', '20240514'),
+    (7, 5, 'Inactive', '20220214'),
+    (4, 5, 'Inactive', '20010101')
 
 

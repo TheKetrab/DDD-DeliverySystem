@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using NHibernate.Linq;
+
 namespace Delivery.Infrastructure.Repositories.NHibernate
 {
     public class ClientNH : BaseImplNH<Client>, IClientRepository
@@ -13,8 +15,12 @@ namespace Delivery.Infrastructure.Repositories.NHibernate
 
         public Client GetClientByEmail(string email)
         {
-            // TODO
-            throw new NotImplementedException();
+            using (var session = OpenSession())
+            {
+                return session.Query<Client>()
+                    .Where(e => e.Email == email).Single();
+            }
+
         }
     }
 }

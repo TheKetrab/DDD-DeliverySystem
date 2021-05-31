@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <PackageReference Include="Dapper" Version="2.0.90" />
+    <PackageReference Include="Iesi.Collections" Version="4.0.4" />
     <PackageReference Include="NHibernate" Version="5.3.8" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
   </ItemGroup>
@@ -38,6 +39,13 @@
       <TargetPath>HibernateMappings\Address.hbm.xml</TargetPath>
     </ContentWithTargetPath>
     <None Include="Repositories\NHibernate\Mappings\Address.hbm.xml" />
+
+    <ContentWithTargetPath Include="Repositories\NHibernate\Mappings\Product.hbm.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <TargetPath>HibernateMappings\Product.hbm.xml</TargetPath>
+    </ContentWithTargetPath>
+    <None Include="Repositories\NHibernate\Mappings\Product.hbm.xml" />
+
   </ItemGroup>
 
 </Project>

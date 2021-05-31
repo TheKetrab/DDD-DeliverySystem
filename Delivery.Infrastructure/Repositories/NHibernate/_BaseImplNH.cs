@@ -13,7 +13,7 @@ namespace Delivery.Infrastructure.Repositories.NHibernate
 {
     public abstract class BaseImplNH<T> : IRepository<T> where T : Entity
     {
-        private ISession OpenSession()
+        protected ISession OpenSession()
         {
             return NHConnector.Instance.OpenSession();
         }
@@ -23,14 +23,14 @@ namespace Delivery.Infrastructure.Repositories.NHibernate
 
 
         // IMPLEMENTATION
-        public T Find(int entityId)
+        public virtual T Find(int entityId)
         {
             using (var session = OpenSession())
             {
                 return session.Get<T>(entityId);
             }
         }
-        public IQueryable<T> FindAll()
+        public virtual IQueryable<T> FindAll()
         {
             using (var session = OpenSession())
             {
@@ -40,7 +40,7 @@ namespace Delivery.Infrastructure.Repositories.NHibernate
             }
         }
 
-        public int Count
+        public virtual int Count
         {
             get
             {
@@ -49,13 +49,13 @@ namespace Delivery.Infrastructure.Repositories.NHibernate
             }
         }
 
-        public void Delete(T entity)
+        public virtual void Delete(T entity)
         {
             using (var session = OpenSession())
                 session.Delete(entity);
         }
 
-        public void Delete(IList<T> entities)
+        public virtual void Delete(IList<T> entities)
         {
             using (var session = OpenSession())
             {
@@ -64,7 +64,7 @@ namespace Delivery.Infrastructure.Repositories.NHibernate
             }
         }
 
-        public void DeleteAll()
+        public virtual void DeleteAll()
         {
             using (var session = OpenSession())
             {
@@ -73,7 +73,7 @@ namespace Delivery.Infrastructure.Repositories.NHibernate
             }
         }
 
-        public void Insert(T entity)
+        public virtual void Insert(T entity)
         {
             using (var session = OpenSession())
             {
@@ -82,7 +82,7 @@ namespace Delivery.Infrastructure.Repositories.NHibernate
             }
         }
 
-        public void Update(T entity)
+        public virtual void Update(T entity)
         {
             using (var session = OpenSession())
             {
@@ -91,7 +91,7 @@ namespace Delivery.Infrastructure.Repositories.NHibernate
             }
         }
 
-        public void Update(IList<T> entities)
+        public virtual void Update(IList<T> entities)
         {
             using (var session = OpenSession())
             {

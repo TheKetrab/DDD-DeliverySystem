@@ -38,6 +38,8 @@ namespace Presentation.ConsoleApp
             IDeliveryService service = new DeliveryService();
 
             var a  = service.GetAllAddresses();
+            var admin = service.GetClientByEmail("admin@gmail.com");
+            var o = service.GetClientOrders(admin);
 
         }
     }

@@ -16,6 +16,7 @@
 
     <!-- MAPPINGS -->
     <mapping file="HibernateMappings/Address.hbm.xml" />
+    <!--<mapping file="HibernateMappings/Order.hbm.xml" />-->
 
-</session-factory>
+  </session-factory>
 </hibernate-configuration>

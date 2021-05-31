@@ -24,7 +24,7 @@ namespace Delivery.Domain.Model.Clients
             return string.Format("{0} ({1}) ({2})", Name, Email, Role);
         }
 
-        public void SetPassword(string password)
+        public virtual void SetPassword(string password)
         {
             Hash = Encryption.ComputeHexStringHash(password);
         }
